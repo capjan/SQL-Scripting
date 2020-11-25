@@ -1,4 +1,4 @@
-# Sql Scripting
+# SQL Scripting
 
 This library allows to create SQL scripts from code at runtime.
 
