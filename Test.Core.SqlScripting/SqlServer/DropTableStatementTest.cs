@@ -11,7 +11,7 @@ namespace Test.Core.SqlScripting.SQLite.SqlServer
         {
             var entity = new EntityObject
             {
-                TableName = "User"
+                TableName = tableName
             };
             var drop = new DropTableStatement(entity);
             var sql  = Context.SingleStatementWriteTest(drop);
