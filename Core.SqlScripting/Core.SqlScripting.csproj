@@ -7,6 +7,11 @@
     <Version>0.1.0-alpha</Version>
     <AssemblyName>Core.SqlScripting</AssemblyName>
     <RootNamespace>Core.SqlScripting</RootNamespace>
+    <Authors>Jan Ruhlaender</Authors>
+    <Description>This library provides the ability to create SQL scripts from source code.</Description>
+    <Product>SQL Scripting</Product>
+    <Copyright>2020 Jan Ruhländer</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
