@@ -2,10 +2,9 @@
 using System.Globalization;
 using System.IO;
 using Core.SqlScripting.Common.Syntax.Insert;
-using Core.SqlScripting.SqlServer.Syntax;
 using Core.Text.Formatter;
 
-namespace Core.SqlScripting.SqlServer.Writer
+namespace Core.SqlScripting.Common.Writer.Insert
 {
     internal class ColumnAssignmentValueFormatter: ITextFormatter<IColumnAssignment>
     {

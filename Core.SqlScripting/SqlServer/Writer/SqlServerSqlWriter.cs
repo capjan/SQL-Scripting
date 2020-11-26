@@ -7,6 +7,7 @@ using Core.SqlScripting.Common.Writer;
 using Core.SqlScripting.Common.Writer.Comment;
 using Core.SqlScripting.Common.Writer.Delete;
 using Core.SqlScripting.Common.Writer.Identifier;
+using Core.SqlScripting.Common.Writer.Insert;
 using Core.SqlScripting.SqlServer.Syntax;
 using Core.SqlScripting.SqlServer.Writer.Helper;
 

@@ -2,10 +2,12 @@
 using System.IO;
 using Core.SqlScripting.Common.Syntax;
 using Core.SqlScripting.Common.Syntax.Comment;
+using Core.SqlScripting.Common.Syntax.Insert;
 using Core.SqlScripting.Common.Writer;
 using Core.SqlScripting.Common.Writer.Comment;
 using Core.SqlScripting.Common.Writer.Delete;
 using Core.SqlScripting.Common.Writer.Identifier;
+using Core.SqlScripting.Common.Writer.Insert;
 using Core.SqlScripting.SQLite.Syntax;
 using Core.SqlScripting.SQLite.Syntax.Statements;
 using Core.SqlScripting.SQLite.Writer.Statements.CreateTable;
@@ -24,6 +26,8 @@ namespace Core.SqlScripting.SQLite.Writer
         private readonly CommentStatementFormatter        _commentStatementFormatter;
         private readonly DeleteStatementFormatter         _deleteStatementFormatter;
         private readonly StatementTerminator              _statementTerminator;
+        private readonly InsertStatementFormatter         _insertStatementFormatter;
+        private readonly DropTableStatementFormatter      _dropTableStatementFormatter;
 
 
         public SQLiteWriter(SqlWriterSettings settings = default)
@@ -49,11 +53,14 @@ namespace Core.SqlScripting.SQLite.Writer
             var indexedColumnFormatter = new IndexedColumnFormatter(sortOrderFormatter, identifierFormatter);
             var primaryKeyFormatter = new PrimaryOrUniqueTableConstraintsFormatter(keyTypeFormatter, indexedColumnFormatter, conflictClauseFormatter, settings.Indent, identifierFormatter);
             var tableConstraintsFormatter = new TableConstraintsFormatter(primaryKeyFormatter);
+            var columnAssignmentFormatter = new ColumnAssignmentValueFormatter();
            _createTableFormatter =  new SqlCreateTableStatementFormatter(tableNameFormatter, columnDefinitionFormatter, tableConstraintsFormatter);
 
             _commentStatementFormatter = new CommentStatementFormatter();
             _deleteStatementFormatter = new DeleteStatementFormatter(entityFormatter);
             _statementTerminatorFormatter = new StatementTerminatorFormatter();
+            _insertStatementFormatter = new InsertStatementFormatter(entityFormatter, identifierFormatter, columnAssignmentFormatter);
+            _dropTableStatementFormatter = new DropTableStatementFormatter(entityFormatter);
         }
 
         public void Write(SqlScript value, TextWriter writer)
@@ -76,6 +83,10 @@ namespace Core.SqlScripting.SQLite.Writer
                 _createTableFormatter.Write(createTableStatement, writer);
             else if (value is DeleteStatement deleteStatement)
                 _deleteStatementFormatter.Write(deleteStatement, writer);
+            else if (value is InsertStatement insertStatement)
+                _insertStatementFormatter.Write(insertStatement, writer);
+            else if (value is DropTableStatement dropTableStatement)
+                _dropTableStatementFormatter.Write(dropTableStatement, writer);
             else
                 throw new NotSupportedException("The script contains an unexpected sql statement.");
 

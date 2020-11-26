@@ -1,8 +1,9 @@
 ﻿using System.IO;
-using Core.SqlScripting.SqlServer.Syntax;
+using Core.SqlScripting.Common.Syntax;
+using Core.SqlScripting.SqlServer.Writer;
 using Core.Text.Formatter;
 
-namespace Core.SqlScripting.SqlServer.Writer
+namespace Core.SqlScripting.Common.Writer
 {
     internal class DropTableStatementFormatter: ITextFormatter<DropTableStatement>
     {

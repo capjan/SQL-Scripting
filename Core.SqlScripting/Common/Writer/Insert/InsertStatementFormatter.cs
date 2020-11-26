@@ -3,10 +3,10 @@ using System.Linq;
 using Core.Extensions.TextRelated;
 using Core.SqlScripting.Common.Syntax.Insert;
 using Core.SqlScripting.Common.Writer.Identifier;
-using Core.SqlScripting.SqlServer.Syntax;
+using Core.SqlScripting.SqlServer.Writer;
 using Core.Text.Formatter;
 
-namespace Core.SqlScripting.SqlServer.Writer
+namespace Core.SqlScripting.Common.Writer.Insert
 {
     internal class InsertStatementFormatter: ITextFormatter<InsertStatement>
     {

@@ -1,6 +1,4 @@
-﻿using Core.SqlScripting.Common.Syntax;
-
-namespace Core.SqlScripting.SqlServer.Syntax
+﻿namespace Core.SqlScripting.Common.Syntax
 {
     public class DropTableStatement: ISqlStatement
     {
