@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using Core.SqlScripting.Common.Syntax.Insert;
 using Core.SqlScripting.SqlServer.Syntax;
 using Core.Text.Formatter;
 
@@ -31,7 +32,7 @@ namespace Core.SqlScripting.SqlServer.Writer
             else if (value is ColumnAssignment<bool> boolAssignment)
                 writer.Write(string.Format(CultureInfo.InvariantCulture, "{0:D}", boolAssignment.Value ? "1": "0"));
             else if (value is ColumnAssignment<DateTime> dateTimeAssignment)
-                writer.Write(string.Format(CultureInfo.InvariantCulture, "{0:yyyy-MM-dd HH:mm:ss.fffffff}", dateTimeAssignment.Value));
+                writer.Write(string.Format(CultureInfo.InvariantCulture, "'{0:yyyy-MM-dd HH:mm:ss.fffffff}'", dateTimeAssignment.Value));
             else 
                 throw new NotImplementedException($"detected unexpected column assignment type: {value.GetType().FullName}");
         }

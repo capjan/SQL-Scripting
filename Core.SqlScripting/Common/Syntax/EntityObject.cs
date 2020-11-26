@@ -1,4 +1,4 @@
-﻿namespace Core.SqlScripting.SqlServer.Syntax
+﻿namespace Core.SqlScripting.Common.Syntax
 {
     public class EntityObject
     {

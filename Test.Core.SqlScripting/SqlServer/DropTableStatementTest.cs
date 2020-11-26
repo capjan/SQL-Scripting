@@ -1,4 +1,5 @@
-﻿using Core.SqlScripting.SqlServer.Syntax;
+﻿using Core.SqlScripting.Common.Syntax;
+using Core.SqlScripting.SqlServer.Syntax;
 using Xunit;
 
 namespace Test.Core.SqlScripting.SQLite.SqlServer

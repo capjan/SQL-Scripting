@@ -1,3 +1,4 @@
+using Core.SqlScripting.Common.Syntax;
 using Core.SqlScripting.SqlServer.Syntax;
 using Xunit;
 

@@ -2,6 +2,7 @@
 using System.IO;
 using Core.SqlScripting.Common.Syntax;
 using Core.SqlScripting.Common.Syntax.Comment;
+using Core.SqlScripting.Common.Syntax.Insert;
 using Core.SqlScripting.Common.Writer.Comment;
 using Core.SqlScripting.Common.Writer.Identifier;
 using Core.SqlScripting.SqlServer.Syntax;

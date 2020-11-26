@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using Core.SqlScripting.Common.Syntax;
 
-namespace Core.SqlScripting.SqlServer.Syntax
+namespace Core.SqlScripting.Common.Syntax.Insert
 {
     public interface IColumnAssignment
     {
@@ -24,5 +23,15 @@ namespace Core.SqlScripting.SqlServer.Syntax
     {
         public EntityObject             Entity      { get; set; } = new EntityObject();
         public IList<IColumnAssignment> Assignments { get; }      = new List<IColumnAssignment>();
+
+        public InsertStatement() { }
+
+        public InsertStatement(string tableName)
+        {
+            Entity = new EntityObject
+            {
+                TableName = tableName
+            };
+        }
     }
 }

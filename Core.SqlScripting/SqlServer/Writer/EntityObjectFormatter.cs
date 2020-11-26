@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Core.SqlScripting.Common.Syntax;
 using Core.SqlScripting.Common.Writer.Identifier;
 using Core.SqlScripting.SqlServer.Syntax;
 using Core.Text.Formatter;
