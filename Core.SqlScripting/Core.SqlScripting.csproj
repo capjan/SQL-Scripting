@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Cap.SqlScripting</PackageId>
-    <Version>0.2.0-alpha</Version>
+    <Version>0.3.0-alpha</Version>
     <AssemblyName>Core.SqlScripting</AssemblyName>
     <RootNamespace>Core.SqlScripting</RootNamespace>
     <Authors>Jan Ruhlaender</Authors>

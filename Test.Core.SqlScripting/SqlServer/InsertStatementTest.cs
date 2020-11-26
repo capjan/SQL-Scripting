@@ -49,6 +49,7 @@ namespace Test.Core.SqlScripting.SQLite.SqlServer
             insert.AddColumn("Id", 1);
             insert.AddColumn("Token", "TEST");
             insert.AddColumn("RoomId", 123);
+            insert.AddColumn("Start", new DateTime(2020,11,10,7,8,0));
             insert.AddColumn("End", new DateTime(2020,11,10,7,8,0));
 
             var sql = Context.SingleStatementWriteTest(insert);

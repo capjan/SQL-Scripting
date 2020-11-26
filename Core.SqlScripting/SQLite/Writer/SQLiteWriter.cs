@@ -2,55 +2,58 @@
 using System.IO;
 using Core.SqlScripting.Common.Syntax;
 using Core.SqlScripting.Common.Syntax.Comment;
+using Core.SqlScripting.Common.Writer;
 using Core.SqlScripting.Common.Writer.Comment;
+using Core.SqlScripting.Common.Writer.Delete;
 using Core.SqlScripting.Common.Writer.Identifier;
 using Core.SqlScripting.SQLite.Syntax;
 using Core.SqlScripting.SQLite.Syntax.Statements;
 using Core.SqlScripting.SQLite.Writer.Statements.CreateTable;
 using Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Column;
 using Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Table;
-using Core.Text.Formatter;
+using Core.SqlScripting.SqlServer.Writer;
 using ISqlStatement = Core.SqlScripting.Common.Syntax.ISqlStatement;
 
 namespace Core.SqlScripting.SQLite.Writer
 {
-    public class SqlWriterSettings
+
+    public class SQLiteWriter: ISqlWriter
     {
-        public ITextFormatter<CommentStatement>     CommentFormatter;
-        public ITextFormatter<CreateTableStatement> CreateTableFormatter;
+        private readonly StatementTerminatorFormatter     _statementTerminatorFormatter;
+        private readonly SqlCreateTableStatementFormatter _createTableFormatter;
+        private readonly CommentStatementFormatter        _commentStatementFormatter;
+        private readonly DeleteStatementFormatter         _deleteStatementFormatter;
+        private readonly StatementTerminator              _statementTerminator;
 
-        public SqlWriterSettings(
-            ITextFormatter<CommentStatement> commentWriter = default, 
-            ITextFormatter<CreateTableStatement> createTableWriter = default)
-        {
-            CommentFormatter         = commentWriter ?? new CommentStatementWriter();
-            CreateTableFormatter     = createTableWriter ?? CreateDefaultIdentifierFormatter();
-        }
 
-        private static SqlCreateTableStatementFormatter CreateDefaultIdentifierFormatter()
+        public SQLiteWriter(SqlWriterSettings settings = default)
         {
-            var indent = "   ";
+            settings = settings ?? new SqlWriterSettings
+            {
+                Indent                               = "   ",
+                StatementTerminator                  = ";",
+                WriteNewLineAfterStatementTerminator = true
+            };
+
+            _statementTerminator = new StatementTerminator(settings.StatementTerminator, settings.WriteNewLineAfterStatementTerminator);
+            _statementTerminatorFormatter = new StatementTerminatorFormatter();
             var identifierFormatter = new IdentifierFormatter(IdentifierQuoteStyle.Default);
+            var entityFormatter = new EntityObjectFormatter(identifierFormatter);
             var conflictClauseFormatter = new ConflictClauseFormatter();
             var primaryKeyColumnConstraintsFormatter = new PrimaryKeyColumnConstraintFormatter(conflictClauseFormatter);
             var constraintFormatter = new ColumnConstraintsFormatter(primaryKeyColumnConstraintsFormatter);
-            var columnDefinitionFormatter = new SqlColumnDefinitionsFormatter(identifierFormatter, constraintFormatter, indent);
+            var columnDefinitionFormatter = new SqlColumnDefinitionsFormatter(identifierFormatter, constraintFormatter, settings.Indent);
             var tableNameFormatter = new TableNameFormatter(identifierFormatter);
             var keyTypeFormatter = new IndexKeyTypeFormatter();
             var sortOrderFormatter = new SortOrderFormatter();
             var indexedColumnFormatter = new IndexedColumnFormatter(sortOrderFormatter, identifierFormatter);
-            var primaryKeyFormatter = new PrimaryOrUniqueTableConstraintsFormatter(keyTypeFormatter, indexedColumnFormatter, conflictClauseFormatter, indent, identifierFormatter);
+            var primaryKeyFormatter = new PrimaryOrUniqueTableConstraintsFormatter(keyTypeFormatter, indexedColumnFormatter, conflictClauseFormatter, settings.Indent, identifierFormatter);
             var tableConstraintsFormatter = new TableConstraintsFormatter(primaryKeyFormatter);
-            return new SqlCreateTableStatementFormatter(tableNameFormatter, columnDefinitionFormatter, tableConstraintsFormatter);
-        }
-    }
-    public class SQLiteWriter: ISqlWriter
-    {
-        private readonly SqlWriterSettings _settings;
-        
-        public SQLiteWriter(SqlWriterSettings settings = default)
-        {
-            _settings = settings = new SqlWriterSettings();
+           _createTableFormatter =  new SqlCreateTableStatementFormatter(tableNameFormatter, columnDefinitionFormatter, tableConstraintsFormatter);
+
+            _commentStatementFormatter = new CommentStatementFormatter();
+            _deleteStatementFormatter = new DeleteStatementFormatter(entityFormatter);
+            _statementTerminatorFormatter = new StatementTerminatorFormatter();
         }
 
         public void Write(SqlScript value, TextWriter writer)
@@ -64,11 +67,19 @@ namespace Core.SqlScripting.SQLite.Writer
         public void Write(ISqlStatement value, TextWriter writer)
         {
             if (value is CommentStatement commentStatement)
-                _settings.CommentFormatter.Write(commentStatement, writer);
-            else if (value is CreateTableStatement createTableStatement) 
-                _settings.CreateTableFormatter.Write(createTableStatement, writer);
+            {
+                _commentStatementFormatter.Write(commentStatement, writer);
+                return;
+            }
+            
+            if (value is CreateTableStatement createTableStatement) 
+                _createTableFormatter.Write(createTableStatement, writer);
+            else if (value is DeleteStatement deleteStatement)
+                _deleteStatementFormatter.Write(deleteStatement, writer);
             else
                 throw new NotSupportedException("The script contains an unexpected sql statement.");
+
+            _statementTerminatorFormatter.Write(_statementTerminator, writer);
         }
     }
 }

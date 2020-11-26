@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using Core.SqlScripting.Common.Syntax;
+using Core.SqlScripting.Common.Writer;
 using Core.SqlScripting.SqlServer.Writer;
 
 namespace Test.Core.SqlScripting.SQLite.SqlServer
@@ -9,9 +10,9 @@ namespace Test.Core.SqlScripting.SQLite.SqlServer
     {
         public static ISqlWriter CreateSingleStatementWriter()
         {
-            var settings = new SqlServerSqlWriterSettings
+            var settings = new SqlWriterSettings
             {
-                CommandTerminator = ";"
+                StatementTerminator = ";"
             };
             return new SqlServerSqlWriter(settings);
         }

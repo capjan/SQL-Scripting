@@ -3,43 +3,48 @@ using System.IO;
 using Core.SqlScripting.Common.Syntax;
 using Core.SqlScripting.Common.Syntax.Comment;
 using Core.SqlScripting.Common.Syntax.Insert;
+using Core.SqlScripting.Common.Writer;
 using Core.SqlScripting.Common.Writer.Comment;
+using Core.SqlScripting.Common.Writer.Delete;
 using Core.SqlScripting.Common.Writer.Identifier;
 using Core.SqlScripting.SqlServer.Syntax;
 using Core.SqlScripting.SqlServer.Writer.Helper;
 
 namespace Core.SqlScripting.SqlServer.Writer
 {
-
-    public class SqlServerSqlWriterSettings
-    {
-        public string CommandTerminator { get; set; } = ";";
-        public string Indent            { get; set; } = "   ";
-    }
-
     public class SqlServerSqlWriter: ISqlWriter
     {
-        private readonly SqlServerSqlWriterSettings      _settings;
+        private readonly StatementTerminator             _statementTerminator;
+        private readonly StatementTerminatorFormatter    _statementTerminatorFormatter;
         private readonly TruncateTableStatementFormatter _truncateTableStatementFormatter;
-        private readonly CommentStatementWriter          _commandStatementWriter;
+        private readonly CommentStatementFormatter       _commandStatementFormatter;
         private readonly InsertStatementFormatter        _insertStatementFormatter;
         private readonly DropTableStatementFormatter     _dropTableStatementFormatter;
         private readonly SetIdentityInsertFormatter      _setIdentityInsertFormatter;
+        private readonly DeleteStatementFormatter        _deleteStatementFormatter;
 
-        public SqlServerSqlWriter(SqlServerSqlWriterSettings settings = default)
+        public SqlServerSqlWriter(SqlWriterSettings settings = default)
         {
+            settings = settings ?? new SqlWriterSettings
+            {
+                Indent = "   ",
+                StatementTerminator = ";",
+                WriteNewLineAfterStatementTerminator = true
+            };
 
             var identifierFormatter   = new IdentifierFormatter(IdentifierQuoteStyle.Microsoft);
             var entityObjectFormatter = new EntityObjectFormatter(identifierFormatter);
             var columnValueAssignmentFormatter = new ColumnAssignmentValueFormatter();
             var onOffFormatter = new OnOffFormatter();
 
-            _settings                        = settings ?? new SqlServerSqlWriterSettings();
-            _commandStatementWriter          = new CommentStatementWriter();
+            _statementTerminator = new StatementTerminator(settings.StatementTerminator, settings.WriteNewLineAfterStatementTerminator);
+            _statementTerminatorFormatter = new StatementTerminatorFormatter();
+            _commandStatementFormatter          = new CommentStatementFormatter();
             _truncateTableStatementFormatter = new TruncateTableStatementFormatter(entityObjectFormatter);
             _insertStatementFormatter = new InsertStatementFormatter(entityObjectFormatter, identifierFormatter, columnValueAssignmentFormatter);
             _dropTableStatementFormatter = new DropTableStatementFormatter(entityObjectFormatter);
             _setIdentityInsertFormatter = new SetIdentityInsertFormatter(entityObjectFormatter, onOffFormatter);
+            _deleteStatementFormatter = new DeleteStatementFormatter(entityObjectFormatter);
 
         }
         public void Write(ISqlStatement value, TextWriter writer)
@@ -49,7 +54,7 @@ namespace Core.SqlScripting.SqlServer.Writer
                 _truncateTableStatementFormatter.Write(truncateTableStatement, writer);
             else if (value is CommentStatement commentStatement)
             {
-                _commandStatementWriter.Write(commentStatement, writer);
+                _commandStatementFormatter.Write(commentStatement, writer);
                 writer.WriteLine();
                 return;
             }
@@ -59,8 +64,12 @@ namespace Core.SqlScripting.SqlServer.Writer
                 _dropTableStatementFormatter.Write(dropTableStatement, writer);
             else if (value is SetIdentityInsertStatement setIdentityInsertStatement)
                 _setIdentityInsertFormatter.Write(setIdentityInsertStatement, writer);
+            else if (value is DeleteStatement deleteStatement)
+                _deleteStatementFormatter.Write(deleteStatement, writer);
             else throw new InvalidOperationException("unexpected statement detected.");
-            writer.WriteLine(_settings.CommandTerminator);
+            
+            // Command Terminator
+            _statementTerminatorFormatter.Write(_statementTerminator, writer);
         }
     }
 }
