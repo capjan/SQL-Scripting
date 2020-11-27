@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Core.SqlScripting.Common.Syntax.Entity;
 
 namespace Core.SqlScripting.Common.Syntax
 {
@@ -17,7 +18,7 @@ namespace Core.SqlScripting.Common.Syntax
         {
             Entity = new EntityObject
             {
-                TableName = tableName
+                Name = tableName
             };
         }
     }

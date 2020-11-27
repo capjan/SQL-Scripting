@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Core.SqlScripting.Enums;
 using Core.SqlScripting.SQLite.Syntax.Enums;
 using Core.Text.Formatter;
 

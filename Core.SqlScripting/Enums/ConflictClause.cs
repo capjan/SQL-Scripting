@@ -1,4 +1,4 @@
-﻿namespace Core.SqlScripting.SQLite.Syntax.Enums
+﻿namespace Core.SqlScripting.Enums
 {
     public enum ConflictClause
     {

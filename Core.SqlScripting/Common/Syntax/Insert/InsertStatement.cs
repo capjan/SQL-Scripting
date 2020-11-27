@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Core.SqlScripting.Common.Syntax.Entity;
 
 namespace Core.SqlScripting.Common.Syntax.Insert
 {
@@ -30,7 +31,7 @@ namespace Core.SqlScripting.Common.Syntax.Insert
         {
             Entity = new EntityObject
             {
-                TableName = tableName
+                Name = tableName
             };
         }
     }

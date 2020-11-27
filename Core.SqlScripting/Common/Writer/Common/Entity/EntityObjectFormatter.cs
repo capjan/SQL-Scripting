@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Core.SqlScripting.Common.Syntax;
+using Core.SqlScripting.Common.Syntax.Entity;
 using Core.SqlScripting.Common.Writer.Identifier;
 using Core.SqlScripting.SqlServer.Syntax;
 using Core.Text.Formatter;
@@ -28,7 +29,7 @@ namespace Core.SqlScripting.SqlServer.Writer
                 _identifierFormatter.Write(value.SchemaName, writer);
                 writer.Write(".");
             }
-            _identifierFormatter.Write(value.TableName, writer);
+            _identifierFormatter.Write(value.Name, writer);
         }
     }
 }

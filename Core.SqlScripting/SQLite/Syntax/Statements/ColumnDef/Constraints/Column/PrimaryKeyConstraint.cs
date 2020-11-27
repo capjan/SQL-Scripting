@@ -1,4 +1,5 @@
-﻿using Core.SqlScripting.SQLite.Syntax.Enums;
+﻿using Core.SqlScripting.Enums;
+using Core.SqlScripting.SQLite.Syntax.Enums;
 
 namespace Core.SqlScripting.SQLite.Syntax.Statements.ColumnDef.Constraints.Column
 {

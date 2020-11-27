@@ -1,4 +1,5 @@
 ﻿using Core.SqlScripting.Common.Syntax;
+using Core.SqlScripting.Common.Syntax.Entity;
 using Core.SqlScripting.SqlServer.Syntax;
 using Xunit;
 
@@ -12,7 +13,7 @@ namespace Test.Core.SqlScripting.SQLite.SqlServer
         {
             var entity = new EntityObject
             {
-                TableName = tableName
+                Name = tableName
             };
             var drop = new DropTableStatement(entity);
             var sql  = Context.SingleStatementWriteTest(drop);

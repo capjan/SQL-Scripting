@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Core.SqlScripting.Enums;
 using Core.SqlScripting.SQLite.Syntax.Enums;
 
 namespace Core.SqlScripting.SQLite.Syntax.Statements.TableConstraints

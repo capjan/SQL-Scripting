@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Common\Writer\Identifier\" />
     <Folder Include="SQLite\Syntax\Statements\ColumnDef\Constraints\Table\" />
     <Folder Include="SQLite\Writer\Basics\" />
   </ItemGroup>

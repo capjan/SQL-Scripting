@@ -1,4 +1,6 @@
-﻿namespace Core.SqlScripting.Common.Syntax
+﻿using Core.SqlScripting.Common.Syntax.Entity;
+
+namespace Core.SqlScripting.Common.Syntax
 {
     public class DropTableStatement: ISqlStatement
     {

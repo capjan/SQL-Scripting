@@ -17,7 +17,7 @@ namespace Test.Core.SqlScripting.SQLite.SqlServer
             {
                 Entity =
                 {
-                    TableName = "User"
+                    Name = "User"
                 },
                 Assignments =
                 {
