@@ -2,13 +2,20 @@
 using System.Globalization;
 using System.IO;
 using Core.SqlScripting.Common.Syntax.Insert;
+using Core.SqlScripting.Common.Writer.Common;
 using Core.Text.Formatter;
 
 namespace Core.SqlScripting.Common.Writer.Insert
 {
     internal class ColumnAssignmentValueFormatter: ITextFormatter<IColumnAssignment>
     {
-        
+        private readonly ISqlStringFormatter _sqlStringFormatter;
+
+        public ColumnAssignmentValueFormatter(ISqlStringFormatter sqlStringFormatter)
+        {
+            _sqlStringFormatter = sqlStringFormatter;
+        }
+
         public void Write(IColumnAssignment value, TextWriter writer)
         {
             if (value is ColumnAssignment<int> intAssignment)
@@ -24,10 +31,7 @@ namespace Core.SqlScripting.Common.Writer.Insert
             else if (value is ColumnAssignment<double> doubleAssignment)
                 writer.Write(string.Format(CultureInfo.InvariantCulture, "{0:F}", doubleAssignment.Value));
             else if (value is ColumnAssignment<string> stringAssignment)
-            {
-                var escapedString = stringAssignment.Value.Replace("'", "''");
-                writer.Write($"'{escapedString}'");
-            }
+                _sqlStringFormatter.Write(stringAssignment.Value, writer);
             else if (value is ColumnAssignment<bool> boolAssignment)
                 writer.Write(string.Format(CultureInfo.InvariantCulture, "{0:D}", boolAssignment.Value ? "1": "0"));
             else if (value is ColumnAssignment<DateTime> dateTimeAssignment)
