@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Core.SqlScripting.Enums;
+using Core.SqlScripting.Common.Syntax;
 using Core.SqlScripting.SQLite.Syntax.Enums;
 
 namespace Core.SqlScripting.SQLite.Syntax.Statements.TableConstraints
@@ -8,6 +8,6 @@ namespace Core.SqlScripting.SQLite.Syntax.Statements.TableConstraints
     {
         public KeyType              KeyType        { get; set; } = KeyType.PrimaryKey;
         public IList<IndexedColumn> Columns        { get; set; } = new List<IndexedColumn>();
-        public ConflictClause       ConflictClause { get; set; } = ConflictClause.Default;
+        public SqlConflictClause       ConflictClause { get; set; } = SqlConflictClause.Default;
     }
 }

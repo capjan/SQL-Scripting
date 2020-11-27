@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using Core.SqlScripting.Common.Writer.Common;
-using Core.SqlScripting.Enums;
 using Core.SqlScripting.SQLite.Syntax.Statements.ColumnDef.Constraints.Column;
 using Core.Text.Formatter;
 

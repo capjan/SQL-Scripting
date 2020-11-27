@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Core.SqlScripting.Enums;
+using Core.SqlScripting.Common.Syntax;
 using Core.SqlScripting.SQLite.Writer.Statements.CreateTable;
 using Core.Text.Formatter;
 
 namespace Core.SqlScripting.Common.Writer.Common
 {
-    internal class OnConflictClauseFormatter: ITextFormatter<ConflictClause>
+    internal class OnConflictClauseFormatter: ITextFormatter<SqlConflictClause>
     {
         private readonly ConflictClauseFormatter _conflictClauseFormatter;
 
@@ -17,9 +17,9 @@ namespace Core.SqlScripting.Common.Writer.Common
             _conflictClauseFormatter = conflictClauseFormatter;
         }
 
-        public void Write(ConflictClause value, TextWriter writer)
+        public void Write(SqlConflictClause value, TextWriter writer)
         {
-            if (value == ConflictClause.Default) return;
+            if (value == SqlConflictClause.Default) return;
             writer.Write(" ON CONFLICT ");
             _conflictClauseFormatter.Write(value, writer);
             

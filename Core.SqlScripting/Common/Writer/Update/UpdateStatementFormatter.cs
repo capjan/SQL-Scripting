@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Core.Extensions.TextRelated;
+using Core.SqlScripting.Common.Syntax;
 using Core.SqlScripting.Common.Syntax.Update;
 using Core.SqlScripting.Common.Writer.Common.Entity;
 using Core.SqlScripting.Common.Writer.Common.Expression;
 using Core.SqlScripting.Common.Writer.Identifier;
-using Core.SqlScripting.Enums;
 using Core.SqlScripting.SQLite.Writer.Statements.CreateTable;
 using Core.Text.Formatter;
 
@@ -32,7 +32,7 @@ namespace Core.SqlScripting.Common.Writer.Update
         public void Write(UpdateStatement value, TextWriter writer)
         {
             writer.Write("UPDATE");
-            if (value.OnConflictRule != ConflictClause.Default)
+            if (value.OnConflictRule != SqlConflictClause.Default)
             {
                 writer.Write(" OR ");
                 _conflictClauseFormatter.Write(value.OnConflictRule, writer);

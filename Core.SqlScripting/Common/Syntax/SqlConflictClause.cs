@@ -1,6 +1,6 @@
-﻿namespace Core.SqlScripting.Enums
+﻿namespace Core.SqlScripting.Common.Syntax
 {
-    public enum ConflictClause
+    public enum SqlConflictClause
     {
         Default,
         Rollback,

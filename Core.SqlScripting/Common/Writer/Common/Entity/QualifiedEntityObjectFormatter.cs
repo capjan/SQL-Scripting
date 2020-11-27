@@ -21,7 +21,7 @@ namespace Core.SqlScripting.Common.Writer.Common.Entity
             _entityObjectFormatter.Write(value.Entity, writer);
             if (!string.IsNullOrWhiteSpace(value.Alias))
             {
-                writer.Write(" ");
+                writer.Write(" AS ");
                 _identifierFormatter.Write(value.Alias, writer);
             }
         }

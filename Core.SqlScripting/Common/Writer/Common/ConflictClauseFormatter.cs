@@ -1,37 +1,37 @@
 ﻿using System;
 using System.IO;
-using Core.SqlScripting.Enums;
+using Core.SqlScripting.Common.Syntax;
 using Core.SqlScripting.SQLite.Syntax.Enums;
 using Core.Text.Formatter;
 
 namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
 {
-    public class ConflictClauseFormatter : ITextFormatter<ConflictClause>
+    public class ConflictClauseFormatter : ITextFormatter<SqlConflictClause>
     {
-        public void Write(ConflictClause value, TextWriter writer)
+        public void Write(SqlConflictClause value, TextWriter writer)
         {
-            if (value == ConflictClause.Default) return;
+            if (value == SqlConflictClause.Default) return;
             
          
             switch (value)
             {
-                case ConflictClause.Rollback:
+                case SqlConflictClause.Rollback:
                     writer.Write("ROLLBACK");
                     break;
-                case ConflictClause.Abort: 
+                case SqlConflictClause.Abort: 
                     writer.Write("ABORT");
                     break;
-                case ConflictClause.Fail:
+                case SqlConflictClause.Fail:
                     writer.Write("FAIL");
                     break;
-                case ConflictClause.Ignore:
+                case SqlConflictClause.Ignore:
                     writer.Write("IGNORE");
                     break;
-                case ConflictClause.Replace:
+                case SqlConflictClause.Replace:
                     writer.Write("REPLACE");
                     break;
                 default:
-                    throw new NotSupportedException($"unexpected {nameof(ConflictClause)} \"{value}\" error");
+                    throw new NotSupportedException($"unexpected {nameof(SqlConflictClause)} \"{value}\" error");
             }
         }
       
