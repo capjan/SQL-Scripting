@@ -4,6 +4,7 @@ using Core.SqlScripting.Common.Syntax.Column;
 using Core.SqlScripting.Common.Syntax.Entity;
 using Core.SqlScripting.Common.Syntax.Update;
 using Core.SqlScripting.Common.Writer;
+using Core.SqlScripting.Extensions;
 using Core.SqlScripting.SQLite.Writer;
 using Xunit;
 
@@ -37,14 +38,7 @@ namespace Test.Core.SqlScripting.SQLite.SQLite
                 }
 
             };
-            update.Assignments.Add(new UpdateAssignment
-            {
-                ColumnOrColumnNameList = new ColumnName{Name = "Name"},
-                Value = new RawExpression
-                {
-                    Content = "'Jan'"
-                }
-            });
+            update.SetColumn("Name", "Jan");
 
             var sql = writer.WriteToString(update);
             Assert.Equal("UPDATE \"User\" SET \"Name\" = 'Jan' WHERE \"Name\" LIKE '%Th';", sql);
@@ -59,14 +53,7 @@ namespace Test.Core.SqlScripting.SQLite.SQLite
             var entity                = new EntityObject {Name                = "User"};
             var qualifiedEntityObject = new QualifiedEntityObject { Entity    = entity };
             var update                = new UpdateStatement {QualifiedEntity = qualifiedEntityObject};
-            update.Assignments.Add(new UpdateAssignment
-            {
-                ColumnOrColumnNameList = new ColumnName{Name = "Name"},
-                Value = new RawExpression
-                {
-                    Content = "'Jan'"
-                }
-            });
+            update.SetColumn("Name", "Jan");
 
             var sql = writer.WriteToString(update);
             Assert.Equal("UPDATE \"User\" SET \"Name\" = 'Jan';", sql);
@@ -87,17 +74,7 @@ namespace Test.Core.SqlScripting.SQLite.SQLite
                 QualifiedEntity = qualifiedEntityObject, 
                 OnConflictRule = SqlConflictClause.Rollback
             };
-
-            // update.OnConflictRule = Core.SqlScripting.Common.Syntax.ConflictClause.Rollback;
-
-            update.Assignments.Add(new UpdateAssignment
-            {
-                ColumnOrColumnNameList = new ColumnName{Name = "Name"},
-                Value = new RawExpression
-                {
-                    Content = "'Jan'"
-                }
-            });
+            update.SetColumn("Name", "Jan");
 
             var sql = writer.WriteToString(update);
             Assert.Equal("UPDATE OR ROLLBACK \"User\" AS \"u\" SET \"Name\" = 'Jan';", sql);

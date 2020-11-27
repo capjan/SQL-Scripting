@@ -10,7 +10,7 @@ namespace Core.SqlScripting.Common.Syntax.Update
     {
         public QualifiedEntityObject   QualifiedEntity { get; set; }
         public SqlConflictClause          OnConflictRule  { get; set; } = SqlConflictClause.Default;
-        public IList<UpdateAssignment> Assignments     { get; set; } = new List<UpdateAssignment>();
+        public IList<IUpdateAssignment> Assignments     { get; set; } = new List<IUpdateAssignment>();
         public IExpression             WhereExpression { get; set; }
     }
 }

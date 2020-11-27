@@ -68,7 +68,7 @@ namespace Core.SqlScripting.SQLite.Writer
             var columnNameFormatter                  = new ColumnNameFormatter(identifierFormatter);
             var columnNameListFormatter              = new ColumnNameListFormatter(columnNameFormatter, separatorFormatter);
             var columnNameOrColumnListFormatter      = new ColumnNameOrColumnNameListFormatter(columnNameFormatter, columnNameListFormatter);
-            var updateAssignmentFormatter            = new UpdateAssignmentFormatter(columnNameOrColumnListFormatter, expressionFormatter);
+            var updateAssignmentFormatter            = new UpdateAssignmentFormatter(columnNameOrColumnListFormatter, expressionFormatter, sqlStringFormatter);
             
  
             _statementTerminator = new StatementTerminator(settings.StatementTerminator, settings.WriteNewLineAfterStatementTerminator);
