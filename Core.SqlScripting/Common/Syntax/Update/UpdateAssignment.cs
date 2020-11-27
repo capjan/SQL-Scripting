@@ -8,6 +8,6 @@ namespace Core.SqlScripting.Common.Syntax.Update
     public class UpdateAssignment
     {
         public IColumnNameOrColumnNameList ColumnOrColumnNameList { get; set; }
-        public IExpression                 Expression             { get; set; }
+        public IExpression                 Value             { get; set; }
     }
 }

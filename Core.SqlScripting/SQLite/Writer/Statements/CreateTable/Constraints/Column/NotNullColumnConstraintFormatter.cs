@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using Core.SqlScripting.Common.Writer.Common;
+using Core.SqlScripting.Enums;
 using Core.SqlScripting.SQLite.Syntax.Statements.ColumnDef.Constraints.Column;
 using Core.Text.Formatter;
 
@@ -6,10 +8,10 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Col
 {
     internal class NotNullColumnConstraintFormatter: ITextFormatter<NotNullColumnConstraint>
     {
-        private readonly ConflictClauseFormatter _conflictClauseFormatter;
-        public NotNullColumnConstraintFormatter(ConflictClauseFormatter conflictClauseFormatter)
+        private readonly OnConflictClauseFormatter _onConflictClauseFormatter;
+        public NotNullColumnConstraintFormatter(OnConflictClauseFormatter conflictClauseFormatter)
         {
-            _conflictClauseFormatter = conflictClauseFormatter;
+            _onConflictClauseFormatter = conflictClauseFormatter;
         }
 
         public void Write(NotNullColumnConstraint value, TextWriter writer)
@@ -17,7 +19,7 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Col
             if (!string.IsNullOrWhiteSpace(value.Name))
                 writer.Write($" {value.Name}");
             writer.Write(" NOT NULL");
-            _conflictClauseFormatter.Write(value.OnConflict, writer);
+            _onConflictClauseFormatter.Write(value.OnConflict, writer);
         }
     }
 }

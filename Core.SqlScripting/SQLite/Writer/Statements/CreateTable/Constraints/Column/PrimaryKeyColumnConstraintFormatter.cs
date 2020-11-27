@@ -1,18 +1,19 @@
 ﻿using System;
 using System.IO;
+using Core.SqlScripting.Common.Writer.Common;
 using Core.SqlScripting.SQLite.Syntax.Enums;
 using Core.SqlScripting.SQLite.Syntax.Statements.ColumnDef.Constraints.Column;
 using Core.Text.Formatter;
 
 namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Column
 {
-    public class PrimaryKeyColumnConstraintFormatter: ITextFormatter<PrimaryKeyConstraint>
+    internal class PrimaryKeyColumnConstraintFormatter: ITextFormatter<PrimaryKeyConstraint>
     {
-        private readonly ConflictClauseFormatter _optionalConflictClauseFormatter;
+        private readonly OnConflictClauseFormatter _onConflictClauseFormatter;
 
-        public PrimaryKeyColumnConstraintFormatter(ConflictClauseFormatter optionalConflictClauseFormatter)
+        public PrimaryKeyColumnConstraintFormatter(OnConflictClauseFormatter optionalConflictClauseFormatter)
         {
-            _optionalConflictClauseFormatter = optionalConflictClauseFormatter;
+            _onConflictClauseFormatter = optionalConflictClauseFormatter;
         }
 
         public void Write(PrimaryKeyConstraint value, TextWriter writer)
@@ -31,7 +32,7 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Col
                 default:
                     throw new NotSupportedException("Unexpected sort order detected.");
             }
-            _optionalConflictClauseFormatter.Write(value.ConflictClause, writer);
+            _onConflictClauseFormatter.Write(value.ConflictClause, writer);
             if (value.Autoincrement)
                 writer.Write(" AUTOINCREMENT");
         }

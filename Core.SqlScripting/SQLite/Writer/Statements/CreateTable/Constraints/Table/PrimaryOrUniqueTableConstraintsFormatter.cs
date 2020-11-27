@@ -2,6 +2,7 @@
 using System.Linq;
 using Core.Extensions.CollectionRelated;
 using Core.Extensions.TextRelated;
+using Core.SqlScripting.Common.Writer.Common;
 using Core.SqlScripting.Common.Writer.Identifier;
 using Core.SqlScripting.SQLite.Syntax.Statements.TableConstraints;
 using Core.Text.Formatter;
@@ -13,14 +14,14 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Tab
         private readonly string                  _indent;
         private readonly IndexKeyTypeFormatter        _indexKeyTypeFormatter;
         private readonly IndexedColumnFormatter  _indexColumnFormatter;
-        private readonly ConflictClauseFormatter _conflictClauseFormatter;
+        private readonly OnConflictClauseFormatter _onConflictClauseFormatter;
         private readonly IdentifierFormatter  _identifierFormatter;
 
-        public PrimaryOrUniqueTableConstraintsFormatter(IndexKeyTypeFormatter indexKeyTypeFormatter, IndexedColumnFormatter indexColumnFormatter, ConflictClauseFormatter conflictClauseFormatter, string indent, IdentifierFormatter identifierFormatter)
+        public PrimaryOrUniqueTableConstraintsFormatter(IndexKeyTypeFormatter indexKeyTypeFormatter, IndexedColumnFormatter indexColumnFormatter, OnConflictClauseFormatter onConflictClauseFormatter, string indent, IdentifierFormatter identifierFormatter)
         {
             _indexKeyTypeFormatter         = indexKeyTypeFormatter;
             _indexColumnFormatter     = indexColumnFormatter;
-            _conflictClauseFormatter  = conflictClauseFormatter;
+            _onConflictClauseFormatter  = onConflictClauseFormatter;
             _indent                   = indent;
             _identifierFormatter = identifierFormatter;
         }
@@ -39,7 +40,7 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Tab
             writer.Write(" ( ");
             writer.Write(value.Columns.Select(i=> _indexColumnFormatter.WriteToString(i)).ToSeparatedString(", "));
             writer.Write(" )");
-            _conflictClauseFormatter.Write(value.ConflictClause, writer);
+            _onConflictClauseFormatter.Write(value.ConflictClause, writer);
         }
     }
 }

@@ -12,23 +12,23 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
         {
             if (value == ConflictClause.Default) return;
             
-            writer.Write(" ON CONFLICT");
+         
             switch (value)
             {
                 case ConflictClause.Rollback:
-                    writer.Write(" ROLLBACK");
+                    writer.Write("ROLLBACK");
                     break;
                 case ConflictClause.Abort: 
-                    writer.Write(" ABORT");
+                    writer.Write("ABORT");
                     break;
                 case ConflictClause.Fail:
-                    writer.Write(" FAIL");
+                    writer.Write("FAIL");
                     break;
                 case ConflictClause.Ignore:
-                    writer.Write(" IGNORE");
+                    writer.Write("IGNORE");
                     break;
                 case ConflictClause.Replace:
-                    writer.Write(" REPLACE");
+                    writer.Write("REPLACE");
                     break;
                 default:
                     throw new NotSupportedException($"unexpected {nameof(ConflictClause)} \"{value}\" error");

@@ -3,12 +3,17 @@ using System.IO;
 using Core.SqlScripting.Common.Syntax;
 using Core.SqlScripting.Common.Syntax.Comment;
 using Core.SqlScripting.Common.Syntax.Insert;
+using Core.SqlScripting.Common.Syntax.Update;
 using Core.SqlScripting.Common.Writer;
 using Core.SqlScripting.Common.Writer.Comment;
 using Core.SqlScripting.Common.Writer.Common;
+using Core.SqlScripting.Common.Writer.Common.Column;
+using Core.SqlScripting.Common.Writer.Common.Entity;
+using Core.SqlScripting.Common.Writer.Common.Expression;
 using Core.SqlScripting.Common.Writer.Delete;
 using Core.SqlScripting.Common.Writer.Identifier;
 using Core.SqlScripting.Common.Writer.Insert;
+using Core.SqlScripting.Common.Writer.Update;
 using Core.SqlScripting.SQLite.Syntax;
 using Core.SqlScripting.SQLite.Syntax.Statements;
 using Core.SqlScripting.SQLite.Writer.Statements;
@@ -16,6 +21,7 @@ using Core.SqlScripting.SQLite.Writer.Statements.CreateTable;
 using Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Column;
 using Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Table;
 using Core.SqlScripting.SqlServer.Writer;
+using Core.Text.Formatter;
 using ISqlStatement = Core.SqlScripting.Common.Syntax.ISqlStatement;
 
 namespace Core.SqlScripting.SQLite.Writer
@@ -30,6 +36,7 @@ namespace Core.SqlScripting.SQLite.Writer
         private readonly InsertStatementFormatter         _insertStatementFormatter;
         private readonly DropTableStatementFormatter      _dropTableStatementFormatter;
         private readonly VacuumStatementFormatter         _vacuumStatementFormatter;
+        private readonly UpdateStatementFormatter         _updateStatementFormatter;
 
         public SQLiteWriter(SqlWriterSettings settings = default)
         {
@@ -40,20 +47,29 @@ namespace Core.SqlScripting.SQLite.Writer
                 WriteNewLineAfterStatementTerminator = true
             };
 
-            var identifierFormatter = new IdentifierFormatter(IdentifierQuoteStyle.Default);
-            var entityFormatter = new EntityObjectFormatter(identifierFormatter);
-            var conflictClauseFormatter = new ConflictClauseFormatter();
-            var sqlStringFormatter = new SqlStringFormatter();
-            var primaryKeyColumnConstraintsFormatter = new PrimaryKeyColumnConstraintFormatter(conflictClauseFormatter);
-            var constraintFormatter = new ColumnConstraintsFormatter(primaryKeyColumnConstraintsFormatter);
-            var columnDefinitionFormatter = new SqlColumnDefinitionsFormatter(identifierFormatter, constraintFormatter, settings.Indent);
-            var tableNameFormatter = new TableNameFormatter(identifierFormatter);
-            var keyTypeFormatter = new IndexKeyTypeFormatter();
-            var sortOrderFormatter = new SortOrderFormatter();
-            var indexedColumnFormatter = new IndexedColumnFormatter(sortOrderFormatter, identifierFormatter);
-            var primaryKeyFormatter = new PrimaryOrUniqueTableConstraintsFormatter(keyTypeFormatter, indexedColumnFormatter, conflictClauseFormatter, settings.Indent, identifierFormatter);
-            var tableConstraintsFormatter = new TableConstraintsFormatter(primaryKeyFormatter);
-            var columnAssignmentFormatter = new ColumnAssignmentValueFormatter(sqlStringFormatter);
+            var separatorFormatter                   = new SeparatorFormatter<string>();
+            var identifierFormatter                  = new IdentifierFormatter(IdentifierQuoteStyle.Default);
+            var entityFormatter                      = new EntityObjectFormatter(identifierFormatter);
+            var qualifiedEntityFormatter             = new QualifiedEntityObjectFormatter(entityFormatter, identifierFormatter);
+            var conflictClauseFormatter              = new ConflictClauseFormatter();
+            var onConflictClauseFormatter            = new OnConflictClauseFormatter(conflictClauseFormatter);
+            var sqlStringFormatter                   = new SqlStringFormatter();
+            var primaryKeyColumnConstraintsFormatter = new PrimaryKeyColumnConstraintFormatter(onConflictClauseFormatter);
+            var constraintFormatter                  = new ColumnConstraintsFormatter(primaryKeyColumnConstraintsFormatter);
+            var columnDefinitionFormatter            = new SqlColumnDefinitionsFormatter(identifierFormatter, constraintFormatter, settings.Indent);
+            var tableNameFormatter                   = new TableNameFormatter(identifierFormatter);
+            var keyTypeFormatter                     = new IndexKeyTypeFormatter();
+            var sortOrderFormatter                   = new SortOrderFormatter();
+            var indexedColumnFormatter               = new IndexedColumnFormatter(sortOrderFormatter, identifierFormatter);
+            var primaryKeyFormatter                  = new PrimaryOrUniqueTableConstraintsFormatter(keyTypeFormatter, indexedColumnFormatter, onConflictClauseFormatter, settings.Indent, identifierFormatter);
+            var tableConstraintsFormatter            = new TableConstraintsFormatter(primaryKeyFormatter);
+            var columnAssignmentFormatter            = new ColumnAssignmentValueFormatter(sqlStringFormatter);
+            var expressionFormatter                  = new ExpressionFormatter();
+            var columnNameFormatter                  = new ColumnNameFormatter(identifierFormatter);
+            var columnNameListFormatter              = new ColumnNameListFormatter(columnNameFormatter, separatorFormatter);
+            var columnNameOrColumnListFormatter      = new ColumnNameOrColumnNameListFormatter(columnNameFormatter, columnNameListFormatter);
+            var updateAssignmentFormatter            = new UpdateAssignmentFormatter(columnNameOrColumnListFormatter, expressionFormatter);
+            
  
             _statementTerminator = new StatementTerminator(settings.StatementTerminator, settings.WriteNewLineAfterStatementTerminator);
             _statementTerminatorFormatter = new StatementTerminatorFormatter();
@@ -64,6 +80,7 @@ namespace Core.SqlScripting.SQLite.Writer
             _insertStatementFormatter = new InsertStatementFormatter(entityFormatter, identifierFormatter, columnAssignmentFormatter);
             _dropTableStatementFormatter = new DropTableStatementFormatter(entityFormatter);
             _vacuumStatementFormatter = new VacuumStatementFormatter(identifierFormatter, sqlStringFormatter);
+            _updateStatementFormatter = new UpdateStatementFormatter(conflictClauseFormatter, qualifiedEntityFormatter, separatorFormatter, updateAssignmentFormatter, expressionFormatter);
         }
 
         public void Write(SqlScript value, TextWriter writer)
@@ -92,6 +109,8 @@ namespace Core.SqlScripting.SQLite.Writer
                 _dropTableStatementFormatter.Write(dropTableStatement, writer);
             else if (value is VacuumStatement vacuumStatement)
                 _vacuumStatementFormatter.Write(vacuumStatement, writer);
+            else if (value is UpdateStatement updateStatement)
+                _updateStatementFormatter.Write(updateStatement, writer);
             else
                 throw new NotSupportedException("The script contains an unexpected sql statement.");
 

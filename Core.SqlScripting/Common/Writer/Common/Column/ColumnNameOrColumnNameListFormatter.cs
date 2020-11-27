@@ -7,11 +7,11 @@ using Core.Text.Formatter;
 
 namespace Core.SqlScripting.Common.Writer.Common.Column
 {
-    internal class ColumnNameOfColumnNameListFormatter: ITextFormatter<IColumnNameOrColumnNameList>
+    internal class ColumnNameOrColumnNameListFormatter: ITextFormatter<IColumnNameOrColumnNameList>
     {
         private readonly ColumnNameFormatter     _columnNameFormatter;
         private readonly ColumnNameListFormatter _columnNameListFormatter;
-        public ColumnNameOfColumnNameListFormatter(ColumnNameFormatter columnNameFormatter, ColumnNameListFormatter columnNameListFormatter)
+        public ColumnNameOrColumnNameListFormatter(ColumnNameFormatter columnNameFormatter, ColumnNameListFormatter columnNameListFormatter)
         {
             _columnNameFormatter          = columnNameFormatter;
             _columnNameListFormatter = columnNameListFormatter;

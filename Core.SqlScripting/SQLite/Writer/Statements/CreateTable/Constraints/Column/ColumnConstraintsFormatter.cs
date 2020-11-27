@@ -7,7 +7,7 @@ using Core.Text.Formatter;
 
 namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Column
 {
-    public class ColumnConstraintsFormatter : ITextFormatter<IList<ISqlColumnConstraint>>
+    internal class ColumnConstraintsFormatter : ITextFormatter<IList<ISqlColumnConstraint>>
     {
         private readonly PrimaryKeyColumnConstraintFormatter _primaryKeyConstraintFormatter;
 
