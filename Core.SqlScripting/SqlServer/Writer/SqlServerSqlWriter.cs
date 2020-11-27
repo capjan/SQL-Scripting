@@ -5,6 +5,7 @@ using Core.SqlScripting.Common.Syntax.Comment;
 using Core.SqlScripting.Common.Syntax.Insert;
 using Core.SqlScripting.Common.Writer;
 using Core.SqlScripting.Common.Writer.Comment;
+using Core.SqlScripting.Common.Writer.Common;
 using Core.SqlScripting.Common.Writer.Delete;
 using Core.SqlScripting.Common.Writer.Identifier;
 using Core.SqlScripting.Common.Writer.Insert;
@@ -33,10 +34,11 @@ namespace Core.SqlScripting.SqlServer.Writer
                 WriteNewLineAfterStatementTerminator = true
             };
 
-            var identifierFormatter   = new IdentifierFormatter(IdentifierQuoteStyle.Microsoft);
-            var entityObjectFormatter = new EntityObjectFormatter(identifierFormatter);
-            var columnValueAssignmentFormatter = new ColumnAssignmentValueFormatter();
-            var onOffFormatter = new OnOffFormatter();
+            var identifierFormatter            = new IdentifierFormatter(IdentifierQuoteStyle.Microsoft);
+            var entityObjectFormatter          = new EntityObjectFormatter(identifierFormatter);
+            var sqlStringFormatter             = new SqlStringFormatter();
+            var columnValueAssignmentFormatter = new ColumnAssignmentValueFormatter(sqlStringFormatter);
+            var onOffFormatter                 = new OnOffFormatter();
 
             _statementTerminator = new StatementTerminator(settings.StatementTerminator, settings.WriteNewLineAfterStatementTerminator);
             _statementTerminatorFormatter = new StatementTerminatorFormatter();

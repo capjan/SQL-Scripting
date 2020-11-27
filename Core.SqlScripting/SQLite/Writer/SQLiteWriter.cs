@@ -5,11 +5,13 @@ using Core.SqlScripting.Common.Syntax.Comment;
 using Core.SqlScripting.Common.Syntax.Insert;
 using Core.SqlScripting.Common.Writer;
 using Core.SqlScripting.Common.Writer.Comment;
+using Core.SqlScripting.Common.Writer.Common;
 using Core.SqlScripting.Common.Writer.Delete;
 using Core.SqlScripting.Common.Writer.Identifier;
 using Core.SqlScripting.Common.Writer.Insert;
 using Core.SqlScripting.SQLite.Syntax;
 using Core.SqlScripting.SQLite.Syntax.Statements;
+using Core.SqlScripting.SQLite.Writer.Statements;
 using Core.SqlScripting.SQLite.Writer.Statements.CreateTable;
 using Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Column;
 using Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Table;
@@ -18,7 +20,6 @@ using ISqlStatement = Core.SqlScripting.Common.Syntax.ISqlStatement;
 
 namespace Core.SqlScripting.SQLite.Writer
 {
-
     public class SQLiteWriter: ISqlWriter
     {
         private readonly StatementTerminatorFormatter     _statementTerminatorFormatter;
@@ -28,7 +29,7 @@ namespace Core.SqlScripting.SQLite.Writer
         private readonly StatementTerminator              _statementTerminator;
         private readonly InsertStatementFormatter         _insertStatementFormatter;
         private readonly DropTableStatementFormatter      _dropTableStatementFormatter;
-
+        private readonly VacuumStatementFormatter         _vacuumStatementFormatter;
 
         public SQLiteWriter(SqlWriterSettings settings = default)
         {
@@ -39,11 +40,10 @@ namespace Core.SqlScripting.SQLite.Writer
                 WriteNewLineAfterStatementTerminator = true
             };
 
-            _statementTerminator = new StatementTerminator(settings.StatementTerminator, settings.WriteNewLineAfterStatementTerminator);
-            _statementTerminatorFormatter = new StatementTerminatorFormatter();
             var identifierFormatter = new IdentifierFormatter(IdentifierQuoteStyle.Default);
             var entityFormatter = new EntityObjectFormatter(identifierFormatter);
             var conflictClauseFormatter = new ConflictClauseFormatter();
+            var sqlStringFormatter = new SqlStringFormatter();
             var primaryKeyColumnConstraintsFormatter = new PrimaryKeyColumnConstraintFormatter(conflictClauseFormatter);
             var constraintFormatter = new ColumnConstraintsFormatter(primaryKeyColumnConstraintsFormatter);
             var columnDefinitionFormatter = new SqlColumnDefinitionsFormatter(identifierFormatter, constraintFormatter, settings.Indent);
@@ -53,14 +53,17 @@ namespace Core.SqlScripting.SQLite.Writer
             var indexedColumnFormatter = new IndexedColumnFormatter(sortOrderFormatter, identifierFormatter);
             var primaryKeyFormatter = new PrimaryOrUniqueTableConstraintsFormatter(keyTypeFormatter, indexedColumnFormatter, conflictClauseFormatter, settings.Indent, identifierFormatter);
             var tableConstraintsFormatter = new TableConstraintsFormatter(primaryKeyFormatter);
-            var columnAssignmentFormatter = new ColumnAssignmentValueFormatter();
-           _createTableFormatter =  new SqlCreateTableStatementFormatter(tableNameFormatter, columnDefinitionFormatter, tableConstraintsFormatter);
-
+            var columnAssignmentFormatter = new ColumnAssignmentValueFormatter(sqlStringFormatter);
+ 
+            _statementTerminator = new StatementTerminator(settings.StatementTerminator, settings.WriteNewLineAfterStatementTerminator);
+            _statementTerminatorFormatter = new StatementTerminatorFormatter();
+            _createTableFormatter =  new SqlCreateTableStatementFormatter(tableNameFormatter, columnDefinitionFormatter, tableConstraintsFormatter);
             _commentStatementFormatter = new CommentStatementFormatter();
             _deleteStatementFormatter = new DeleteStatementFormatter(entityFormatter);
             _statementTerminatorFormatter = new StatementTerminatorFormatter();
             _insertStatementFormatter = new InsertStatementFormatter(entityFormatter, identifierFormatter, columnAssignmentFormatter);
             _dropTableStatementFormatter = new DropTableStatementFormatter(entityFormatter);
+            _vacuumStatementFormatter = new VacuumStatementFormatter(identifierFormatter, sqlStringFormatter);
         }
 
         public void Write(SqlScript value, TextWriter writer)
@@ -87,6 +90,8 @@ namespace Core.SqlScripting.SQLite.Writer
                 _insertStatementFormatter.Write(insertStatement, writer);
             else if (value is DropTableStatement dropTableStatement)
                 _dropTableStatementFormatter.Write(dropTableStatement, writer);
+            else if (value is VacuumStatement vacuumStatement)
+                _vacuumStatementFormatter.Write(vacuumStatement, writer);
             else
                 throw new NotSupportedException("The script contains an unexpected sql statement.");
 
