@@ -13,12 +13,7 @@ namespace Test.Core.SqlScripting.SQLite.SqlServer
         [InlineData("TRUNCATE TABLE [Master].[dbo].[User];", "User", "dbo", "Master")]
         public void WriteValidCommand(string expected, string tableName, string schemaName = null, string databaseName = null)
         {
-            var entity = new EntityObject
-            {
-                DatabaseName = databaseName,
-                SchemaName   = schemaName,
-                Name    = tableName
-            };
+            var entity = new EntityObject(tableName, schemaName, databaseName);
             var truncateTable = new TruncateTableStatement(entity);
 
             var result = Context.SingleStatementWriteTest(truncateTable);

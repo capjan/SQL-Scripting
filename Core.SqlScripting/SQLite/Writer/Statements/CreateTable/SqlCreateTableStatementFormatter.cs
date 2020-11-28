@@ -1,24 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Core.SqlScripting.SQLite.Syntax.Statements;
-using Core.SqlScripting.SQLite.Syntax.Statements.ColumnDef;
+using Core.SqlScripting.Common.Syntax.CreateTable;
+using Core.SqlScripting.Common.Syntax.CreateTable.ColumnDef;
+using Core.SqlScripting.SqlServer.Writer;
 using Core.Text.Formatter;
 
 namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
 {
     internal class SqlCreateTableStatementFormatter : ITextFormatter<CreateTableStatement>
     {
-        private readonly TableNameFormatter                          _tableNameFormatter;
+        private readonly EntityObjectFormatter                   _entityObjectFormatter;
         private readonly ITextFormatter<IList<ColumnDefinition>> _columnDefinitionFormatter;
-        private readonly TableConstraintsFormatter                   _tableConstraintsFormatter;
+        private readonly TableConstraintsFormatter               _tableConstraintsFormatter;
 
         public SqlCreateTableStatementFormatter(
-            TableNameFormatter                          tableNameFormatter,
+            EntityObjectFormatter                          entityObjectFormatter,
             ITextFormatter<IList<ColumnDefinition>> columnDefinitionFormatter, TableConstraintsFormatter tableConstraintsFormatter)
         {
-            _columnDefinitionFormatter      = columnDefinitionFormatter;
+            _columnDefinitionFormatter = columnDefinitionFormatter;
             _tableConstraintsFormatter = tableConstraintsFormatter;
-            _tableNameFormatter             = tableNameFormatter;
+            _entityObjectFormatter     = entityObjectFormatter;
         }
 
         public void Write(CreateTableStatement value, TextWriter writer)
@@ -27,7 +28,8 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
             if (value.IsTemporary) writer.Write(" TEMPORARY");
             writer.Write(" TABLE");
             if (value.IfNotExits) writer.Write(" IF NOT EXISTS");
-            _tableNameFormatter.Write(value, writer);
+            writer.Write(" ");
+            _entityObjectFormatter.Write(value.Entity, writer);
             writer.WriteLine();
             
             // Column definitions

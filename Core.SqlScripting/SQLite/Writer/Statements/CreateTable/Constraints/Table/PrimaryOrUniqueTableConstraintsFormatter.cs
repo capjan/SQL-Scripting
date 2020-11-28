@@ -2,9 +2,9 @@
 using System.Linq;
 using Core.Extensions.CollectionRelated;
 using Core.Extensions.TextRelated;
+using Core.SqlScripting.Common.Syntax.CreateTable.TableConstraints;
 using Core.SqlScripting.Common.Writer.Common;
 using Core.SqlScripting.Common.Writer.Identifier;
-using Core.SqlScripting.SQLite.Syntax.Statements.TableConstraints;
 using Core.Text.Formatter;
 
 namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Table

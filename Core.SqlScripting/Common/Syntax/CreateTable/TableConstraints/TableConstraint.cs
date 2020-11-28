@@ -1,4 +1,4 @@
-﻿namespace Core.SqlScripting.SQLite.Syntax.Statements.TableConstraints
+﻿namespace Core.SqlScripting.Common.Syntax.CreateTable.TableConstraints
 {
     public abstract class TableConstraint
     {

@@ -22,17 +22,14 @@ namespace Core.SqlScripting.Common.Syntax.Insert
 
     public class InsertStatement: ISqlStatement
     {
-        public EntityObject             Entity      { get; set; } = new EntityObject();
+        public EntityObject             Entity      { get; }
         public IList<IColumnAssignment> Assignments { get; }      = new List<IColumnAssignment>();
 
         public InsertStatement() { }
 
         public InsertStatement(string tableName)
         {
-            Entity = new EntityObject
-            {
-                Name = tableName
-            };
+            Entity = new EntityObject(tableName);
         }
     }
 }

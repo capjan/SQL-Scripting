@@ -1,6 +1,6 @@
 ﻿using System.IO;
+using Core.SqlScripting.Common.Syntax.CreateTable.ColumnDef.Constraints.Column;
 using Core.SqlScripting.Common.Writer.Common;
-using Core.SqlScripting.SQLite.Syntax.Statements.ColumnDef.Constraints.Column;
 using Core.Text.Formatter;
 
 namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Column

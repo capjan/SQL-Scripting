@@ -1,4 +1,4 @@
-﻿namespace Core.SqlScripting.SQLite.Syntax.Statements.ColumnDef.Constraints.Column
+﻿namespace Core.SqlScripting.Common.Syntax.CreateTable.ColumnDef.Constraints.Column
 {
     public class DefaultConstraint : AbstractSqlColumnConstraint
     {

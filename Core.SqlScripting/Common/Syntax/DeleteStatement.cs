@@ -9,17 +9,14 @@ namespace Core.SqlScripting.Common.Syntax
     {
         public EntityObject Entity { get; set; }
 
-        public DeleteStatement()
+        public DeleteStatement(EntityObject entity)
         {
-            Entity = new EntityObject();
+            Entity = entity;
         }
 
-        public DeleteStatement(string tableName)
+        public DeleteStatement(string entityName)
         {
-            Entity = new EntityObject
-            {
-                Name = tableName
-            };
+            Entity = new EntityObject(entityName);
         }
     }
 }

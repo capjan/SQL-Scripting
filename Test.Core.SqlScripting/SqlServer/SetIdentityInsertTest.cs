@@ -10,10 +10,7 @@ namespace Test.Core.SqlScripting.SQLite.SqlServer
         [Fact]
         public void BasicTest()
         {
-            var entity = new EntityObject
-            {
-                Name = "User"
-            };
+            var entity = new EntityObject("User");
             var setIdentityInsert = new SetIdentityInsertStatement
             {
                 Entity = entity,

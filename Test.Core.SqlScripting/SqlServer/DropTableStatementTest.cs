@@ -11,10 +11,7 @@ namespace Test.Core.SqlScripting.SQLite.SqlServer
         [InlineData("DROP TABLE IF EXISTS [User];", "User")]
         public void BasicTest(string expected, string tableName)
         {
-            var entity = new EntityObject
-            {
-                Name = tableName
-            };
+            var entity = new EntityObject(tableName);
             var drop = new DropTableStatement(entity);
             var sql  = Context.SingleStatementWriteTest(drop);
             Assert.Equal(expected, sql);

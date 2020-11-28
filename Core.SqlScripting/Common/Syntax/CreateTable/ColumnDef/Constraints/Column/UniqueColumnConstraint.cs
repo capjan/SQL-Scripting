@@ -1,7 +1,4 @@
-﻿using Core.SqlScripting.Common.Syntax;
-using Core.SqlScripting.SQLite.Syntax.Enums;
-
-namespace Core.SqlScripting.SQLite.Syntax.Statements.ColumnDef.Constraints.Column
+﻿namespace Core.SqlScripting.Common.Syntax.CreateTable.ColumnDef.Constraints.Column
 {
     public class UniqueColumnConstraint: AbstractSqlColumnConstraint
     {

@@ -1,9 +1,12 @@
 using Core.Extensions.TextRelated;
+using Core.SqlScripting.Common.Syntax.CreateTable;
+using Core.SqlScripting.Common.Syntax.CreateTable.ColumnDef;
+using Core.SqlScripting.Common.Syntax.CreateTable.TableConstraints;
+using Core.SqlScripting.Common.Syntax.Datatypes;
+using Core.SqlScripting.Common.Syntax.Entity;
 using Core.SqlScripting.SQLite.Syntax;
 using Core.SqlScripting.SQLite.Syntax.Enums;
 using Core.SqlScripting.SQLite.Syntax.Statements;
-using Core.SqlScripting.SQLite.Syntax.Statements.ColumnDef;
-using Core.SqlScripting.SQLite.Syntax.Statements.TableConstraints;
 using Core.SqlScripting.SQLite.Writer;
 using Xunit;
 
@@ -15,19 +18,18 @@ namespace Test.Core.SqlScripting.SQLite.SQLite
         [Fact]
         public void TestSQLGeneration()
         {
-            var table = new CreateTableStatement()
+            var table = new CreateTableStatement("User")
             {
-                Name = "User",
                 Columns = {
                     new ColumnDefinition
                     {
                         Name = "Id",
-                        Type = SQLiteTypeAffinity.Integer
+                        Type = new SqlIntegerType()
                     },
                     new ColumnDefinition
                     {
                         Name = "FirstName",
-                        Type = SQLiteTypeAffinity.Text
+                        Type = new SqlStringType(SqlStringLengthBehavior.Varying, 50)
                     }
                 },
                 TableConstraints = { 

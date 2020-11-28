@@ -20,10 +20,7 @@ namespace Test.Core.SqlScripting.SQLite.SQLite
                 WriteNewLineAfterStatementTerminator = false
             };
             var writer = new SQLiteWriter(settings);
-            var entity = new EntityObject
-            {
-                Name = "User"
-            };
+            var entity = new EntityObject("User");
             var qualifiedEntityObject = new QualifiedEntityObject
             {
                 Entity = entity
@@ -50,7 +47,7 @@ namespace Test.Core.SqlScripting.SQLite.SQLite
         {
             var settings              = new SqlWriterSettings {WriteNewLineAfterStatementTerminator = false};
             var writer                = new SQLiteWriter(settings);
-            var entity                = new EntityObject {Name                = "User"};
+            var entity                = new EntityObject("User");
             var qualifiedEntityObject = new QualifiedEntityObject { Entity    = entity };
             var update                = new UpdateStatement {QualifiedEntity = qualifiedEntityObject};
             update.SetColumn("Name", "Jan");
@@ -66,7 +63,7 @@ namespace Test.Core.SqlScripting.SQLite.SQLite
         {
             var settings              = new SqlWriterSettings {WriteNewLineAfterStatementTerminator = false};
             var writer                = new SQLiteWriter(settings);
-            var entity                = new EntityObject {Name                = "User"};
+            var entity                = new EntityObject("User");
             var qualifiedEntityObject = new QualifiedEntityObject { Entity    = entity, Alias = "u"};
 
             var update = new UpdateStatement

@@ -1,4 +1,4 @@
-﻿namespace Core.SqlScripting.SQLite.Syntax.Statements.ColumnDef.Constraints
+﻿namespace Core.SqlScripting.Common.Syntax.CreateTable.ColumnDef.Constraints
 {
     public interface ISqlColumnConstraint
     {

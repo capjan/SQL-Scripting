@@ -15,10 +15,8 @@ namespace Test.Core.SqlScripting.SQLite.SQLite
         public void BasicTest(string expected, string tableName)
         {
 
-            var entity = new EntityObject
-            {
-                Name = tableName
-            };
+            var entity = new EntityObject(tableName);
+        
             var drop = new DropTableStatement(entity);
 
             var settings = new SqlWriterSettings

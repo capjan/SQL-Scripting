@@ -18,15 +18,15 @@ namespace Core.SqlScripting.SqlServer.Writer
 
         public void Write(EntityObject value, TextWriter writer)
         {
-            if (!string.IsNullOrWhiteSpace(value.DatabaseName))
+            if (!string.IsNullOrWhiteSpace(value.Database))
             {
-                _identifierFormatter.Write(value.DatabaseName, writer);
+                _identifierFormatter.Write(value.Database, writer);
                 writer.Write(".");
             }
 
-            if (!string.IsNullOrWhiteSpace(value.SchemaName))
+            if (!string.IsNullOrWhiteSpace(value.Schema))
             {
-                _identifierFormatter.Write(value.SchemaName, writer);
+                _identifierFormatter.Write(value.Schema, writer);
                 writer.Write(".");
             }
             _identifierFormatter.Write(value.Name, writer);

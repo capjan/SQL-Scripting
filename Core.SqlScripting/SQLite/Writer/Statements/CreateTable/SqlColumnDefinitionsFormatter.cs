@@ -1,25 +1,29 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Core.SqlScripting.SQLite.Syntax.Statements.ColumnDef;
-using Core.SqlScripting.SQLite.Syntax.Statements.ColumnDef.Constraints;
+using Core.SqlScripting.Common.Syntax.CreateTable.ColumnDef;
+using Core.SqlScripting.Common.Syntax.CreateTable.ColumnDef.Constraints;
+using Core.SqlScripting.Common.Writer.Common;
 using Core.Text.Formatter;
 
 namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
 {
-    public class SqlColumnDefinitionsFormatter : ITextFormatter<IList<ColumnDefinition>>
+    internal class SqlColumnDefinitionsFormatter : ITextFormatter<IList<ColumnDefinition>>
     {
         private readonly string                                      _indent;
         private readonly ITextFormatter<string>                      _identifierFormatter;
         private readonly ITextFormatter<IList<ISqlColumnConstraint>> _constraintFormatter;
+        private readonly ISqlTypeFormatter                           _typeFormatter;
 
         public SqlColumnDefinitionsFormatter(
             ITextFormatter<string>                      identifierFormatter, 
             ITextFormatter<IList<ISqlColumnConstraint>> constraintFormatter, 
+            ISqlTypeFormatter                           typeFormatter,
             string                                      indent)
         {
             _identifierFormatter = identifierFormatter;
             _constraintFormatter = constraintFormatter;
             _indent              = indent;
+            _typeFormatter  = typeFormatter;
         }
 
         public void Write(IList<ColumnDefinition> value, TextWriter writer)
@@ -30,7 +34,7 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
                 writer.Write(_indent);
                 _identifierFormatter.Write(colDef.Name, writer);
                 writer.Write(" ");
-                writer.Write(colDef.Type);
+                _typeFormatter.Write(colDef.Type, writer);
                 if (colDef.Constraints.Count != 0)
                 {
                     

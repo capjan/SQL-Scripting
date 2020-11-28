@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Core.SqlScripting.Common.Syntax;
 using Core.SqlScripting.SQLite.Syntax.Enums;
 
-namespace Core.SqlScripting.SQLite.Syntax.Statements.TableConstraints
+namespace Core.SqlScripting.Common.Syntax.CreateTable.TableConstraints
 {
     public class TablePrimaryOrUniqueKeyConstraint: TableConstraint
     {

@@ -1,6 +1,6 @@
 ﻿using Core.SqlScripting.SQLite.Syntax.Enums;
 
-namespace Core.SqlScripting.SQLite.Syntax.Statements.ColumnDef.Constraints.Column
+namespace Core.SqlScripting.Common.Syntax.CreateTable.ColumnDef.Constraints.Column
 {
     /// <summary>
     /// Generated Always Clause. Available from version 3.31.0 (2020-01-22)

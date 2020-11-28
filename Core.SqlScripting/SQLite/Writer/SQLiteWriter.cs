@@ -2,6 +2,7 @@
 using System.IO;
 using Core.SqlScripting.Common.Syntax;
 using Core.SqlScripting.Common.Syntax.Comment;
+using Core.SqlScripting.Common.Syntax.CreateTable;
 using Core.SqlScripting.Common.Syntax.Insert;
 using Core.SqlScripting.Common.Syntax.Update;
 using Core.SqlScripting.Common.Writer;
@@ -56,8 +57,8 @@ namespace Core.SqlScripting.SQLite.Writer
             var sqlStringFormatter                   = new SqlStringFormatter();
             var primaryKeyColumnConstraintsFormatter = new PrimaryKeyColumnConstraintFormatter(onConflictClauseFormatter);
             var constraintFormatter                  = new ColumnConstraintsFormatter(primaryKeyColumnConstraintsFormatter);
-            var columnDefinitionFormatter            = new SqlColumnDefinitionsFormatter(identifierFormatter, constraintFormatter, settings.Indent);
-            var tableNameFormatter                   = new TableNameFormatter(identifierFormatter);
+            var sqlTypeFormatter                     = new SQLiteStrictTypeFormatter();
+            var columnDefinitionFormatter            = new SqlColumnDefinitionsFormatter(identifierFormatter, constraintFormatter, sqlTypeFormatter, settings.Indent);
             var keyTypeFormatter                     = new IndexKeyTypeFormatter();
             var sortOrderFormatter                   = new SortOrderFormatter();
             var indexedColumnFormatter               = new IndexedColumnFormatter(sortOrderFormatter, identifierFormatter);
@@ -73,7 +74,7 @@ namespace Core.SqlScripting.SQLite.Writer
  
             _statementTerminator = new StatementTerminator(settings.StatementTerminator, settings.WriteNewLineAfterStatementTerminator);
             _statementTerminatorFormatter = new StatementTerminatorFormatter();
-            _createTableFormatter =  new SqlCreateTableStatementFormatter(tableNameFormatter, columnDefinitionFormatter, tableConstraintsFormatter);
+            _createTableFormatter =  new SqlCreateTableStatementFormatter(entityFormatter, columnDefinitionFormatter, tableConstraintsFormatter);
             _commentStatementFormatter = new CommentStatementFormatter();
             _deleteStatementFormatter = new DeleteStatementFormatter(entityFormatter);
             _statementTerminatorFormatter = new StatementTerminatorFormatter();

@@ -1,6 +1,6 @@
 ﻿using Core.SqlScripting.SQLite.Syntax.Enums;
 
-namespace Core.SqlScripting.SQLite.Syntax.Statements.TableConstraints
+namespace Core.SqlScripting.Common.Syntax.CreateTable.TableConstraints
 {
     public class IndexedColumn
     {

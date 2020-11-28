@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Core.SqlScripting.SQLite.Syntax.Statements.TableConstraints;
+using Core.SqlScripting.Common.Syntax.CreateTable.TableConstraints;
 using Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Table;
 using Core.Text.Formatter;
 

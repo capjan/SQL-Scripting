@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.SqlScripting.Common.Syntax.Entity;
 using Core.SqlScripting.Common.Syntax.Insert;
 using Core.SqlScripting.Extensions;
 using Core.SqlScripting.SqlServer.Syntax;
@@ -13,12 +14,9 @@ namespace Test.Core.SqlScripting.SQLite.SqlServer
         [Fact]
         public void BasicTest()
         {
-            var insert = new InsertStatement
+            
+            var insert = new InsertStatement("User")
             {
-                Entity =
-                {
-                    Name = "User"
-                },
                 Assignments =
                 {
                     new ColumnAssignment<int>("Id", 6),
