@@ -9,7 +9,7 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
 {
     internal class SqlColumnDefinitionsFormatter : ITextFormatter<IList<ColumnDefinition>>
     {
-        private readonly string                                      _indent;
+        //private readonly string                                      _indent;
         private readonly ITextFormatter<string>                      _identifierFormatter;
         private readonly ITextFormatter<IList<ISqlColumnConstraint>> _constraintFormatter;
         private readonly ISqlTypeFormatter                           _typeFormatter;
@@ -17,13 +17,11 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
         public SqlColumnDefinitionsFormatter(
             ITextFormatter<string>                      identifierFormatter, 
             ITextFormatter<IList<ISqlColumnConstraint>> constraintFormatter, 
-            ISqlTypeFormatter                           typeFormatter,
-            string                                      indent)
+            ISqlTypeFormatter                           typeFormatter)
         {
             _identifierFormatter = identifierFormatter;
             _constraintFormatter = constraintFormatter;
-            _indent              = indent;
-            _typeFormatter  = typeFormatter;
+            _typeFormatter       = typeFormatter;
         }
 
         public void Write(IList<ColumnDefinition> value, TextWriter writer)
@@ -31,16 +29,15 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
             for (var index = 0; index < value.Count; index++)
             {
                 var colDef = value[index];
-                writer.Write(_indent);
                 _identifierFormatter.Write(colDef.Name, writer);
                 writer.Write(" ");
                 _typeFormatter.Write(colDef.Type, writer);
                 if (colDef.Constraints.Count != 0)
                 {
-                    
+                    writer.Write(" ");
                     _constraintFormatter.Write(colDef.Constraints, writer);
                 }
-                if (index < (value.Count-1)) writer.WriteLine(",");
+                if (index < (value.Count-1)) writer.Write(", ");
             }
         }
     }

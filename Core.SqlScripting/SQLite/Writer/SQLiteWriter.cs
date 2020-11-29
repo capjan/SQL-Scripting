@@ -57,8 +57,8 @@ namespace Core.SqlScripting.SQLite.Writer
             var sqlStringFormatter                   = new SqlStringFormatter();
             var primaryKeyColumnConstraintsFormatter = new PrimaryKeyColumnConstraintFormatter(onConflictClauseFormatter);
             var constraintFormatter                  = new ColumnConstraintsFormatter(primaryKeyColumnConstraintsFormatter);
-            var sqlTypeFormatter                     = new SQLiteStrictTypeFormatter();
-            var columnDefinitionFormatter            = new SqlColumnDefinitionsFormatter(identifierFormatter, constraintFormatter, sqlTypeFormatter, settings.Indent);
+            var sqlTypeFormatter                     = new SQLiteTypeFormatter();
+            var columnDefinitionFormatter            = new SqlColumnDefinitionsFormatter(identifierFormatter, constraintFormatter, sqlTypeFormatter);
             var keyTypeFormatter                     = new IndexKeyTypeFormatter();
             var sortOrderFormatter                   = new SortOrderFormatter();
             var indexedColumnFormatter               = new IndexedColumnFormatter(sortOrderFormatter, identifierFormatter);

@@ -18,7 +18,7 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Col
 
         public void Write(PrimaryKeyConstraint value, TextWriter writer)
         {
-            writer.Write(" PRIMARY KEY");
+            writer.Write("PRIMARY KEY");
             switch (value.Order)
             {
                 case SortOrder.Default:

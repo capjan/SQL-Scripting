@@ -22,6 +22,10 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Col
             {
                 if (constraint is PrimaryKeyConstraint primaryKeyConstraint)
                     _primaryKeyConstraintFormatter.Write(primaryKeyConstraint, writer);
+                else if (constraint is UniqueColumnConstraint)
+                    writer.Write("UNIQUE");
+                else if (constraint is NotNullColumnConstraint)
+                    writer.Write("NOT NULL");
                 else
                 {
                     Debugger.Break();

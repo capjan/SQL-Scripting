@@ -30,21 +30,19 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
             if (value.IfNotExits) writer.Write(" IF NOT EXISTS");
             writer.Write(" ");
             _entityObjectFormatter.Write(value.Entity, writer);
-            writer.WriteLine();
+            
             
             // Column definitions
-            writer.WriteLine("(");
+            writer.Write(" ( ");
             _columnDefinitionFormatter.Write(value.Columns, writer);
             // table constraints
             _tableConstraintsFormatter.Write(value.TableConstraints, writer);
-            writer.WriteLine();
-            writer.Write(")");
+            writer.Write(" )");
             
             
 
             // Without RowID
             if (value.WithoutRowId) writer.Write(" WITHOUT ROWID");
-            writer.WriteLine(";");
 
         }
     }
