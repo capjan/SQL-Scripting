@@ -7,13 +7,13 @@ using Core.Text.Formatter;
 
 namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
 {
-    internal class SqlCreateTableStatementFormatter : ITextFormatter<CreateTableStatement>
+    internal class CreateTableStatementFormatter : ITextFormatter<CreateTableStatement>
     {
         private readonly EntityObjectFormatter                   _entityObjectFormatter;
         private readonly ITextFormatter<IList<ColumnDefinition>> _columnDefinitionFormatter;
         private readonly TableConstraintsFormatter               _tableConstraintsFormatter;
 
-        public SqlCreateTableStatementFormatter(
+        public CreateTableStatementFormatter(
             EntityObjectFormatter                          entityObjectFormatter,
             ITextFormatter<IList<ColumnDefinition>> columnDefinitionFormatter, TableConstraintsFormatter tableConstraintsFormatter)
         {

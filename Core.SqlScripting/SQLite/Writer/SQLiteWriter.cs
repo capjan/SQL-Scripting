@@ -30,7 +30,7 @@ namespace Core.SqlScripting.SQLite.Writer
     public class SQLiteWriter: ISqlWriter
     {
         private readonly StatementTerminatorFormatter     _statementTerminatorFormatter;
-        private readonly SqlCreateTableStatementFormatter _createTableFormatter;
+        private readonly CreateTableStatementFormatter _createTableFormatter;
         private readonly CommentStatementFormatter        _commentStatementFormatter;
         private readonly DeleteStatementFormatter         _deleteStatementFormatter;
         private readonly StatementTerminator              _statementTerminator;
@@ -74,7 +74,7 @@ namespace Core.SqlScripting.SQLite.Writer
  
             _statementTerminator = new StatementTerminator(settings.StatementTerminator, settings.WriteNewLineAfterStatementTerminator);
             _statementTerminatorFormatter = new StatementTerminatorFormatter();
-            _createTableFormatter =  new SqlCreateTableStatementFormatter(entityFormatter, columnDefinitionFormatter, tableConstraintsFormatter);
+            _createTableFormatter =  new CreateTableStatementFormatter(entityFormatter, columnDefinitionFormatter, tableConstraintsFormatter);
             _commentStatementFormatter = new CommentStatementFormatter();
             _deleteStatementFormatter = new DeleteStatementFormatter(entityFormatter);
             _statementTerminatorFormatter = new StatementTerminatorFormatter();

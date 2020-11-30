@@ -34,6 +34,10 @@ namespace Test.Core.SqlScripting.SQLite.StatementTest
 
             Assert.Equal("CREATE TABLE \"User\" ( \"Id\" INTEGER PRIMARY KEY, \"Login\" TEXT NOT NULL, \"Password\" TEXT NOT NULL );", sql);
 
+            var sqlServer    = new SqlServerSqlWriter(settings);
+            var sqlServerSql = sqlServer.WriteToString(createTable, "");
+
+            Assert.Equal("CREATE TABLE [User] ( [Id] INT PRIMARY KEY, [Login] NVARCHAR(50) NOT NULL, [Password] NVARCHAR(50) NOT NULL );", sqlServerSql);
 
         }
     }
