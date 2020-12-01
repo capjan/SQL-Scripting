@@ -11,21 +11,27 @@ namespace Core.SqlScripting.SQLite.Writer.Statements
     internal class PragmaStatementFormatter: ITextFormatter<PragmaStatement>
     {
         private readonly EntityObjectFormatter _entityObjectFormatter;
+        private readonly PragmaValueFormatter  _pragmaValueFormatter;
 
-        public PragmaStatementFormatter(EntityObjectFormatter entityObjectFormatter)
+        public PragmaStatementFormatter(EntityObjectFormatter entityObjectFormatter, PragmaValueFormatter pragmaValueFormatter)
         {
-            _entityObjectFormatter = entityObjectFormatter;
+            _entityObjectFormatter     = entityObjectFormatter;
+            _pragmaValueFormatter = pragmaValueFormatter;
         }
 
         public void Write(PragmaStatement value, TextWriter writer)
         {
             writer.Write("PRAGMA ");
             _entityObjectFormatter.Write(value.Entity, writer);
-            throw new NotImplementedException();
+            if (value.Value != null)
+            {
+                writer.Write(" = ");
+                _pragmaValueFormatter.Write(value.Value, writer);
+            }
         }
     }
 
-    internal class PragamaValueFormatter : ITextFormatter<IPragmaValue>
+    internal class PragmaValueFormatter : ITextFormatter<IPragmaValue>
     {
         public void Write(IPragmaValue value, TextWriter writer)
         {
