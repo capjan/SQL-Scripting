@@ -4,7 +4,7 @@
 
 This library provides SQL code generation from code.
 
-It's a still work in progress project, not complete please don't even think about using this library in production environments.
+It's a still work in progress project, not jet complete - so please don't even think about using this library in production environments.
 
 # Getting Started
 
