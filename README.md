@@ -2,9 +2,9 @@
 
 ![Build-Badge](https://github.com/capjan/SQL-Scripting/workflows/.NET%20Core/badge.svg)
 
-This library provides the ability to create SQL scripts from source code.
+This library provides SQL code generation from code.
 
-The library is still under development, is not yet complete and **should not** be used in production environments.
+It's a still work in progress project, not complete please don't even think about using this library in production environments.
 
 # Getting Started
 
