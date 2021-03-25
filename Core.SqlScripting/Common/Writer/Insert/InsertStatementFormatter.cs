@@ -37,8 +37,6 @@ namespace Core.SqlScripting.Common.Writer.Insert
             var valueList = value.Assignments.Select(i => _columnAssignmentValueFormatter.WriteToString(i)).ToArray();
             _separatorFormatter.Write(valueList, writer);
             writer.Write(" )");
-
-
         }
     }
 }
