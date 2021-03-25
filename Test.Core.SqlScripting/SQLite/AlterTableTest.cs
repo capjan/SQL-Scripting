@@ -1,5 +1,8 @@
 ﻿using Core.Extensions.TextRelated;
 using Core.SqlScripting.Common.Syntax.AlterTable;
+using Core.SqlScripting.Common.Syntax.CreateTable;
+using Core.SqlScripting.Common.Syntax.CreateTable.ColumnDef;
+using Core.SqlScripting.Common.Syntax.Entity;
 using Core.SqlScripting.Common.Writer;
 using Core.SqlScripting.SQLite.Writer;
 using Xunit;
@@ -38,6 +41,27 @@ namespace Test.Core.SqlScripting.SQLite.SQLite
             var actual    = writer.WriteToString(statement);
             
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void AddColumnTest()
+        {
+            var settings = new SqlWriterSettings
+            {
+                WriteNewLineAfterStatementTerminator = false
+            };
+
+            var statement = new AddColumnStatement(
+                new EntityObject("MyTableName"), 
+                new ColumnDefinition {
+                    Name = "Count",
+                    Type = new SqlIntegerType()
+
+                });
+            var writer    = new SQLiteWriter(settings);
+            var actual    = writer.WriteToString(statement);
+            
+            Assert.Equal("ALTER TABLE \"MyTableName\" ADD COLUMN \"Count\" INTEGER;", actual);
         }
     }
 }

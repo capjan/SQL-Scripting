@@ -7,21 +7,40 @@ using Core.Text.Formatter;
 
 namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
 {
-    internal class SqlColumnDefinitionsFormatter : ITextFormatter<IList<ColumnDefinition>>
+    internal class SqlColumnDefinitionFormatter : ITextFormatter<ColumnDefinition>
     {
         //private readonly string                                      _indent;
         private readonly ITextFormatter<string>                      _identifierFormatter;
         private readonly ITextFormatter<IList<ISqlColumnConstraint>> _constraintFormatter;
         private readonly ISqlTypeFormatter                           _typeFormatter;
 
-        public SqlColumnDefinitionsFormatter(
-            ITextFormatter<string>                      identifierFormatter, 
-            ITextFormatter<IList<ISqlColumnConstraint>> constraintFormatter, 
-            ISqlTypeFormatter                           typeFormatter)
+        public SqlColumnDefinitionFormatter(ITextFormatter<string> identifierFormatter, ITextFormatter<IList<ISqlColumnConstraint>> constraintFormatter, ISqlTypeFormatter typeFormatter)
         {
             _identifierFormatter = identifierFormatter;
             _constraintFormatter = constraintFormatter;
-            _typeFormatter       = typeFormatter;
+            _typeFormatter  = typeFormatter;
+        }
+
+        public void Write(ColumnDefinition value, TextWriter writer)
+        {
+            _identifierFormatter.Write(value.Name, writer);
+            writer.Write(" ");
+            _typeFormatter.Write(value.Type, writer);
+            if (value.Constraints.Count != 0)
+            {
+                writer.Write(" ");
+                _constraintFormatter.Write(value.Constraints, writer);
+            }
+        }
+    }
+
+    internal class SqlColumnDefinitionsFormatter : ITextFormatter<IList<ColumnDefinition>>
+    {
+        private readonly ITextFormatter<ColumnDefinition> _columnDefinitionFormatter;
+
+        public SqlColumnDefinitionsFormatter(ITextFormatter<ColumnDefinition> columnDefinitionFormatter)
+        {
+            _columnDefinitionFormatter = columnDefinitionFormatter;
         }
 
         public void Write(IList<ColumnDefinition> value, TextWriter writer)
@@ -29,14 +48,7 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
             for (var index = 0; index < value.Count; index++)
             {
                 var colDef = value[index];
-                _identifierFormatter.Write(colDef.Name, writer);
-                writer.Write(" ");
-                _typeFormatter.Write(colDef.Type, writer);
-                if (colDef.Constraints.Count != 0)
-                {
-                    writer.Write(" ");
-                    _constraintFormatter.Write(colDef.Constraints, writer);
-                }
+                _columnDefinitionFormatter.Write(colDef, writer);
                 if (index < (value.Count-1)) writer.Write(", ");
             }
         }

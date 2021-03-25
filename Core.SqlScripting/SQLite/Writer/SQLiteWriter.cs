@@ -43,6 +43,7 @@ namespace Core.SqlScripting.SQLite.Writer
         private readonly PragmaStatementFormatter       _pragmaStatementFormatter;
         private readonly RenameTableStatementFormatter  _renameTableStatementFormatter;
         private readonly RenameColumnStatementFormatter _renameColumnStatementFormatter;
+        private readonly AddColumnStatementFormatter    _addColumnStatementFormatter;
 
 
         public SQLiteWriter(SqlWriterSettings settings = default)
@@ -64,7 +65,8 @@ namespace Core.SqlScripting.SQLite.Writer
             var primaryKeyColumnConstraintsFormatter = new PrimaryKeyColumnConstraintFormatter(onConflictClauseFormatter);
             var constraintFormatter                  = new ColumnConstraintsFormatter(primaryKeyColumnConstraintsFormatter);
             var sqlTypeFormatter                     = new SQLiteTypeFormatter();
-            var columnDefinitionFormatter            = new SqlColumnDefinitionsFormatter(identifierFormatter, constraintFormatter, sqlTypeFormatter);
+            var columnDefinitionFormatter            = new SqlColumnDefinitionFormatter(identifierFormatter, constraintFormatter, sqlTypeFormatter);
+            var columnDefinitionListFormatter        = new SqlColumnDefinitionsFormatter(columnDefinitionFormatter);
             var keyTypeFormatter                     = new IndexKeyTypeFormatter();
             var sortOrderFormatter                   = new SortOrderFormatter();
             var indexedColumnFormatter               = new IndexedColumnFormatter(sortOrderFormatter, identifierFormatter);
@@ -82,7 +84,7 @@ namespace Core.SqlScripting.SQLite.Writer
  
             _statementTerminator = new StatementTerminator(settings.StatementTerminator, settings.WriteNewLineAfterStatementTerminator);
             _statementTerminatorFormatter = new StatementTerminatorFormatter();
-            _createTableFormatter =  new CreateTableStatementFormatter(entityFormatter, columnDefinitionFormatter, tableConstraintsFormatter);
+            _createTableFormatter =  new CreateTableStatementFormatter(entityFormatter, columnDefinitionListFormatter, tableConstraintsFormatter);
             _commentStatementFormatter = new CommentStatementFormatter();
             _deleteStatementFormatter = new DeleteStatementFormatter(entityFormatter);
             _statementTerminatorFormatter = new StatementTerminatorFormatter();
@@ -93,6 +95,7 @@ namespace Core.SqlScripting.SQLite.Writer
             _pragmaStatementFormatter = new PragmaStatementFormatter(entityFormatter, pragmaValueFormatter);
             _renameTableStatementFormatter = new RenameTableStatementFormatter(entityFormatter);
             _renameColumnStatementFormatter = new RenameColumnStatementFormatter(entityFormatter, columnNameFormatter);
+            _addColumnStatementFormatter = new AddColumnStatementFormatter(entityFormatter, columnDefinitionFormatter);
         }
 
         public void Write(SqlScript value, TextWriter writer)
@@ -129,6 +132,8 @@ namespace Core.SqlScripting.SQLite.Writer
                 _renameTableStatementFormatter.Write(renameTableStatement, writer);
             else if (value is RenameColumnStatement renameColumnStatement)
                 _renameColumnStatementFormatter.Write(renameColumnStatement, writer);
+            else if (value is AddColumnStatement addColumnStatement)
+                _addColumnStatementFormatter.Write(addColumnStatement, writer);
             else
                 throw new NotSupportedException("The script contains an unexpected sql statement.");
 

@@ -45,20 +45,20 @@ namespace Core.SqlScripting.SqlServer.Writer
             var sqlStringFormatter             = new SqlStringFormatter();
             var columnValueAssignmentFormatter = new ColumnAssignmentValueFormatter(sqlStringFormatter);
             var conflictClauseFormatter = new ConflictClauseFormatter();
-            var onColflictClauseFormatter = new OnConflictClauseFormatter(conflictClauseFormatter);
+            var onConflictClauseFormatter = new OnConflictClauseFormatter(conflictClauseFormatter);
             
             var primaryKeyColumnConstraintFormatter =
-                new PrimaryKeyColumnConstraintFormatter(onColflictClauseFormatter);
+                new PrimaryKeyColumnConstraintFormatter(onConflictClauseFormatter);
             var typeFormatter = new SqlServerTypeFormatter();
             var columnConstraintFormatter  = new ColumnConstraintsFormatter(primaryKeyColumnConstraintFormatter);
-            var columnDefinitionFormatter =
-                new SqlColumnDefinitionsFormatter(identifierFormatter, columnConstraintFormatter, typeFormatter);
+            var columnDefinitionFormatter = new SqlColumnDefinitionFormatter(identifierFormatter, columnConstraintFormatter, typeFormatter);
+            var columnListDefinitionFormatter = new SqlColumnDefinitionsFormatter(columnDefinitionFormatter);
             var indexKeyFormatter       = new IndexKeyTypeFormatter();
             var sortOrderFormatter      = new SortOrderFormatter();
             var indexedColumnFormatter = new IndexedColumnFormatter(sortOrderFormatter, identifierFormatter);
 
             var primaryOrUniqueTableConstraintsFormatter = new PrimaryOrUniqueTableConstraintsFormatter(
-                indexKeyFormatter, indexedColumnFormatter, onColflictClauseFormatter, settings.Indent,
+                indexKeyFormatter, indexedColumnFormatter, onConflictClauseFormatter, settings.Indent,
                 identifierFormatter);
             var onOffFormatter            = new OnOffFormatter();
             var tableConstraintsFormatter = new TableConstraintsFormatter(primaryOrUniqueTableConstraintsFormatter);
@@ -71,7 +71,7 @@ namespace Core.SqlScripting.SqlServer.Writer
             _dropTableStatementFormatter = new DropTableStatementFormatter(entityObjectFormatter);
             _setIdentityInsertFormatter = new SetIdentityInsertFormatter(entityObjectFormatter, onOffFormatter);
             _deleteStatementFormatter = new DeleteStatementFormatter(entityObjectFormatter);
-            _createTableFormatter = new CreateTableStatementFormatter(entityObjectFormatter, columnDefinitionFormatter, tableConstraintsFormatter);
+            _createTableFormatter = new CreateTableStatementFormatter(entityObjectFormatter, columnListDefinitionFormatter, tableConstraintsFormatter);
 
         }
         public void Write(ISqlStatement value, TextWriter writer)
