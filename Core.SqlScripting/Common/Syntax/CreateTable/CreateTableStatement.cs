@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Text;
 using Core.SqlScripting.Common.Syntax.CreateTable.ColumnDef;
 using Core.SqlScripting.Common.Syntax.CreateTable.TableConstraints;
 using Core.SqlScripting.Common.Syntax.Entity;

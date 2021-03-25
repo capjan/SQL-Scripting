@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Core.SqlScripting.Common.Syntax;
+using Core.SqlScripting.Common.Syntax.AlterTable;
 using Core.SqlScripting.Common.Syntax.Comment;
 using Core.SqlScripting.Common.Syntax.CreateTable;
 using Core.SqlScripting.Common.Syntax.Insert;
@@ -18,6 +19,7 @@ using Core.SqlScripting.Common.Writer.Update;
 using Core.SqlScripting.SQLite.Syntax;
 using Core.SqlScripting.SQLite.Syntax.Statements;
 using Core.SqlScripting.SQLite.Writer.Statements;
+using Core.SqlScripting.SQLite.Writer.Statements.AlterTable;
 using Core.SqlScripting.SQLite.Writer.Statements.CreateTable;
 using Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Column;
 using Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Table;
@@ -39,6 +41,8 @@ namespace Core.SqlScripting.SQLite.Writer
         private readonly VacuumStatementFormatter      _vacuumStatementFormatter;
         private readonly UpdateStatementFormatter      _updateStatementFormatter;
         private readonly PragmaStatementFormatter      _pragmaStatementFormatter;
+        private readonly RenameTableStatementFormatter _renameTableStatementFormatter;
+
 
         public SQLiteWriter(SqlWriterSettings settings = default)
         {
@@ -71,6 +75,7 @@ namespace Core.SqlScripting.SQLite.Writer
             var columnNameListFormatter              = new ColumnNameListFormatter(columnNameFormatter, separatorFormatter);
             var columnNameOrColumnListFormatter      = new ColumnNameOrColumnNameListFormatter(columnNameFormatter, columnNameListFormatter);
             var updateAssignmentFormatter            = new UpdateAssignmentFormatter(columnNameOrColumnListFormatter, expressionFormatter, sqlStringFormatter);
+            
             var pragmaValueFormatter = new PragmaValueFormatter();
             
  
@@ -85,6 +90,7 @@ namespace Core.SqlScripting.SQLite.Writer
             _vacuumStatementFormatter = new VacuumStatementFormatter(identifierFormatter, sqlStringFormatter);
             _updateStatementFormatter = new UpdateStatementFormatter(conflictClauseFormatter, qualifiedEntityFormatter, separatorFormatter, updateAssignmentFormatter, expressionFormatter);
             _pragmaStatementFormatter = new PragmaStatementFormatter(entityFormatter, pragmaValueFormatter);
+            _renameTableStatementFormatter = new RenameTableStatementFormatter(entityFormatter);
         }
 
         public void Write(SqlScript value, TextWriter writer)
@@ -117,6 +123,8 @@ namespace Core.SqlScripting.SQLite.Writer
                 _updateStatementFormatter.Write(updateStatement, writer);
             else if (value is PragmaStatement pragmaStatement)
                 _pragmaStatementFormatter.Write(pragmaStatement, writer);
+            else if (value is RenameTableStatement renameTableStatement)
+                _renameTableStatementFormatter.Write(renameTableStatement, writer);
             else
                 throw new NotSupportedException("The script contains an unexpected sql statement.");
 

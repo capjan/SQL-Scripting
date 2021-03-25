@@ -13,9 +13,9 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
         private readonly ITextFormatter<IList<ColumnDefinition>> _columnDefinitionFormatter;
         private readonly TableConstraintsFormatter               _tableConstraintsFormatter;
 
-        public CreateTableStatementFormatter(
-            EntityObjectFormatter                          entityObjectFormatter,
-            ITextFormatter<IList<ColumnDefinition>> columnDefinitionFormatter, TableConstraintsFormatter tableConstraintsFormatter)
+        public CreateTableStatementFormatter(EntityObjectFormatter entityObjectFormatter,
+                                             ITextFormatter<IList<ColumnDefinition>> columnDefinitionFormatter, 
+                                             TableConstraintsFormatter tableConstraintsFormatter)
         {
             _columnDefinitionFormatter = columnDefinitionFormatter;
             _tableConstraintsFormatter = tableConstraintsFormatter;
@@ -31,7 +31,6 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
             writer.Write(" ");
             _entityObjectFormatter.Write(value.Entity, writer);
             
-            
             // Column definitions
             writer.Write(" ( ");
             _columnDefinitionFormatter.Write(value.Columns, writer);
@@ -39,11 +38,8 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
             _tableConstraintsFormatter.Write(value.TableConstraints, writer);
             writer.Write(" )");
             
-            
-
             // Without RowID
             if (value.WithoutRowId) writer.Write(" WITHOUT ROWID");
-
         }
     }
 }
