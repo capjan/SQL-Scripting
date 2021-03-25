@@ -31,17 +31,18 @@ namespace Core.SqlScripting.SQLite.Writer
 {
     public class SQLiteWriter: ISqlWriter
     {
-        private readonly StatementTerminatorFormatter  _statementTerminatorFormatter;
-        private readonly CreateTableStatementFormatter _createTableFormatter;
-        private readonly CommentStatementFormatter     _commentStatementFormatter;
-        private readonly DeleteStatementFormatter      _deleteStatementFormatter;
-        private readonly StatementTerminator           _statementTerminator;
-        private readonly InsertStatementFormatter      _insertStatementFormatter;
-        private readonly DropTableStatementFormatter   _dropTableStatementFormatter;
-        private readonly VacuumStatementFormatter      _vacuumStatementFormatter;
-        private readonly UpdateStatementFormatter      _updateStatementFormatter;
-        private readonly PragmaStatementFormatter      _pragmaStatementFormatter;
-        private readonly RenameTableStatementFormatter _renameTableStatementFormatter;
+        private readonly StatementTerminatorFormatter   _statementTerminatorFormatter;
+        private readonly CreateTableStatementFormatter  _createTableFormatter;
+        private readonly CommentStatementFormatter      _commentStatementFormatter;
+        private readonly DeleteStatementFormatter       _deleteStatementFormatter;
+        private readonly StatementTerminator            _statementTerminator;
+        private readonly InsertStatementFormatter       _insertStatementFormatter;
+        private readonly DropTableStatementFormatter    _dropTableStatementFormatter;
+        private readonly VacuumStatementFormatter       _vacuumStatementFormatter;
+        private readonly UpdateStatementFormatter       _updateStatementFormatter;
+        private readonly PragmaStatementFormatter       _pragmaStatementFormatter;
+        private readonly RenameTableStatementFormatter  _renameTableStatementFormatter;
+        private readonly RenameColumnStatementFormatter _renameColumnStatementFormatter;
 
 
         public SQLiteWriter(SqlWriterSettings settings = default)
@@ -91,6 +92,7 @@ namespace Core.SqlScripting.SQLite.Writer
             _updateStatementFormatter = new UpdateStatementFormatter(conflictClauseFormatter, qualifiedEntityFormatter, separatorFormatter, updateAssignmentFormatter, expressionFormatter);
             _pragmaStatementFormatter = new PragmaStatementFormatter(entityFormatter, pragmaValueFormatter);
             _renameTableStatementFormatter = new RenameTableStatementFormatter(entityFormatter);
+            _renameColumnStatementFormatter = new RenameColumnStatementFormatter(entityFormatter, columnNameFormatter);
         }
 
         public void Write(SqlScript value, TextWriter writer)
@@ -125,6 +127,8 @@ namespace Core.SqlScripting.SQLite.Writer
                 _pragmaStatementFormatter.Write(pragmaStatement, writer);
             else if (value is RenameTableStatement renameTableStatement)
                 _renameTableStatementFormatter.Write(renameTableStatement, writer);
+            else if (value is RenameColumnStatement renameColumnStatement)
+                _renameColumnStatementFormatter.Write(renameColumnStatement, writer);
             else
                 throw new NotSupportedException("The script contains an unexpected sql statement.");
 

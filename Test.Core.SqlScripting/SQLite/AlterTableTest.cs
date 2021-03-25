@@ -22,7 +22,22 @@ namespace Test.Core.SqlScripting.SQLite.SQLite
             var actual    = writer.WriteToString(statement);
             
             Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("ALTER TABLE \"MyTableName\" RENAME COLUMN \"OldColumnName\" TO \"NewColumnName\";", "MyTableName", "OldColumnName", "NewColumnName")]
+        public void RenameColumnTest(string expected, string tableName, string oldColumnName, string newColumnName)
+        {
+            var settings = new SqlWriterSettings
+            {
+                WriteNewLineAfterStatementTerminator = false
+            };
+
+            var statement = new RenameColumnStatement(tableName, oldColumnName, newColumnName);
+            var writer    = new SQLiteWriter(settings);
+            var actual    = writer.WriteToString(statement);
             
+            Assert.Equal(expected, actual);
         }
     }
 }

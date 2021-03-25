@@ -21,8 +21,8 @@ namespace Core.SqlScripting.Extensions
         {
             var result = new UpdateAssignment<T>
             {
-                ColumnOrColumnNameList = new ColumnName{Name = columnName},
-                Value = value
+                ColumnOrColumnNameList = new ColumnName(columnName),
+                Value                  = value
             };
             statement.Assignments.Add(result);
             return result;

@@ -5,6 +5,11 @@
     /// </summary>
     public class ColumnName: IColumnNameOrColumnNameList
     {
-        public string Name { get; set; }
+        public string Name { get; }
+
+        public ColumnName(string name)
+        {
+            Name = name;
+        }
     }
 }

@@ -28,4 +28,6 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.AlterTable
             _entityFormatter.Write(newEntity, writer);
         }
     }
+
+    
 }

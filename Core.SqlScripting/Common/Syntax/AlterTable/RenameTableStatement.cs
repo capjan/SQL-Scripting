@@ -4,11 +4,10 @@ namespace Core.SqlScripting.Common.Syntax.AlterTable
 {
     public class RenameTableStatement : AlterTableStatement
     {
-        public string NewTableName { get; set; }
+        public string NewTableName { get; }
 
-        public RenameTableStatement(EntityObject entity, string newTableName)
+        public RenameTableStatement(EntityObject entity, string newTableName) : base(entity)
         {
-            Entity  = entity;
             NewTableName = newTableName;
         }
 
