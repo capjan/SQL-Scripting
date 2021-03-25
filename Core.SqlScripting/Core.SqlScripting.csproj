@@ -19,11 +19,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Common\Writer\Identifier\**" />
+    <EmbeddedResource Remove="Common\Writer\Identifier\**" />
+    <None Remove="Common\Writer\Identifier\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Cap.Core" Version="4.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Writer\Identifier\" />
     <Folder Include="Common\Syntax\CreateTable\ColumnDef\Constraints\Table\" />
   </ItemGroup>
 
