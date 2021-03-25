@@ -63,5 +63,20 @@ namespace Test.Core.SqlScripting.SQLite.SQLite
             
             Assert.Equal("ALTER TABLE \"MyTableName\" ADD COLUMN \"Count\" INTEGER;", actual);
         }
+
+        [Fact]
+        public void DropColumnTest()
+        {
+            var settings = new SqlWriterSettings
+            {
+                WriteNewLineAfterStatementTerminator = false
+            };
+
+            var statement = new DropColumnStatement("MyTableName", "ColumnToDrop");
+            var writer = new SQLiteWriter(settings);
+            var actual = writer.WriteToString(statement);
+            
+            Assert.Equal("ALTER TABLE \"MyTableName\" DROP COLUMN \"ColumnToDrop\";", actual);
+        }
     }
 }

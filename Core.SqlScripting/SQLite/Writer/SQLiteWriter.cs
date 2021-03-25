@@ -44,6 +44,7 @@ namespace Core.SqlScripting.SQLite.Writer
         private readonly RenameTableStatementFormatter  _renameTableStatementFormatter;
         private readonly RenameColumnStatementFormatter _renameColumnStatementFormatter;
         private readonly AddColumnStatementFormatter    _addColumnStatementFormatter;
+        private readonly DropColumnStatementFormatter   _dropColumnStatementFormatter;
 
 
         public SQLiteWriter(SqlWriterSettings settings = default)
@@ -96,6 +97,7 @@ namespace Core.SqlScripting.SQLite.Writer
             _renameTableStatementFormatter = new RenameTableStatementFormatter(entityFormatter);
             _renameColumnStatementFormatter = new RenameColumnStatementFormatter(entityFormatter, columnNameFormatter);
             _addColumnStatementFormatter = new AddColumnStatementFormatter(entityFormatter, columnDefinitionFormatter);
+            _dropColumnStatementFormatter = new DropColumnStatementFormatter(entityFormatter, columnNameFormatter);
         }
 
         public void Write(SqlScript value, TextWriter writer)
@@ -134,6 +136,8 @@ namespace Core.SqlScripting.SQLite.Writer
                 _renameColumnStatementFormatter.Write(renameColumnStatement, writer);
             else if (value is AddColumnStatement addColumnStatement)
                 _addColumnStatementFormatter.Write(addColumnStatement, writer);
+            else if (value is DropColumnStatement dropColumnStatement)
+                _dropColumnStatementFormatter.Write(dropColumnStatement, writer);
             else
                 throw new NotSupportedException("The script contains an unexpected sql statement.");
 
