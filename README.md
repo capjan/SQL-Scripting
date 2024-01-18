@@ -1,6 +1,6 @@
 # SQL Scripting
 
-![Build-Badge](https://github.com/capjan/SQL-Scripting/workflows/.NET%20Core/badge.svg)
+![Build-Badge](https://github.com/capjan/SQL-Scripting/workflows/.NET%208/badge.svg)
 
 This library provides SQL code generation from code.
 
