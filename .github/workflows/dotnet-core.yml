@@ -1,4 +1,4 @@
-name: .NET Core
+name: .NET 8
 
 on:
   push:
