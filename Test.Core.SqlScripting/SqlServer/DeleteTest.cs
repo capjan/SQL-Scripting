@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.SqlScripting.Common.Syntax;
+﻿using Core.SqlScripting.Common.Syntax;
 using Xunit;
 
 namespace Test.Core.SqlScripting.SQLite.SqlServer

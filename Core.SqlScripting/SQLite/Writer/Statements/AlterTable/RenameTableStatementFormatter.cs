@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System.IO;
+using Core.SqlScripting.Common;
 using Core.SqlScripting.Common.Syntax.AlterTable;
 using Core.SqlScripting.Common.Syntax.Entity;
+using Core.SqlScripting.Common.Writer.Common.Entity;
 using Core.SqlScripting.SqlServer.Writer;
-using Core.Text.Formatter;
 
 namespace Core.SqlScripting.SQLite.Writer.Statements.AlterTable
 {

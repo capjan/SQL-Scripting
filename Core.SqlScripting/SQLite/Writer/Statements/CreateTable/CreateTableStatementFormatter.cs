@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Core.SqlScripting.Common;
 using Core.SqlScripting.Common.Syntax.CreateTable;
 using Core.SqlScripting.Common.Syntax.CreateTable.ColumnDef;
+using Core.SqlScripting.Common.Writer.Common.Entity;
 using Core.SqlScripting.SqlServer.Writer;
-using Core.Text.Formatter;
 
 namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
 {

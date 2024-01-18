@@ -1,12 +1,9 @@
 ﻿using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using Core.Extensions.TextRelated;
 using Core.SqlScripting.Common.Syntax;
 using Core.SqlScripting.Common.Syntax.Update;
 using Core.SqlScripting.Common.Writer.Common.Entity;
 using Core.SqlScripting.Common.Writer.Common.Expression;
-using Core.SqlScripting.Common.Writer.Identifier;
 using Core.SqlScripting.SQLite.Writer.Statements.CreateTable;
 using Core.Text.Formatter;
 

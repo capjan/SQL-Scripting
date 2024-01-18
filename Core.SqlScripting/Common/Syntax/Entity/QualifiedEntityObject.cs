@@ -5,6 +5,11 @@
     /// </summary>
     public class QualifiedEntityObject
     {
+        public QualifiedEntityObject(EntityObject entity)
+        {
+            Entity = entity;
+        }
+
         /// <summary>
         /// Entity Definition
         /// </summary>
@@ -13,6 +18,6 @@
         /// <summary>
         /// Alias Name
         /// </summary>
-        public string       Alias  { get; set; }
+        public string?       Alias  { get; set; }
     }
 }

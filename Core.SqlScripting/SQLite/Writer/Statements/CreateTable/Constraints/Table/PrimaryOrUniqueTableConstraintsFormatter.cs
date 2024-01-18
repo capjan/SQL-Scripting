@@ -1,11 +1,9 @@
 ﻿using System.IO;
 using System.Linq;
-using Core.Extensions.CollectionRelated;
-using Core.Extensions.TextRelated;
+using Core.SqlScripting.Common;
 using Core.SqlScripting.Common.Syntax.CreateTable.TableConstraints;
 using Core.SqlScripting.Common.Writer.Common;
 using Core.SqlScripting.Common.Writer.Identifier;
-using Core.Text.Formatter;
 
 namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Table
 {
@@ -38,7 +36,7 @@ namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Tab
             }
             _indexKeyTypeFormatter.Write(value.KeyType, writer);
             writer.Write(" ( ");
-            writer.Write(value.Columns.Select(i=> _indexColumnFormatter.WriteToString(i)).ToSeparatedString(", "));
+            writer.Write(value.Columns.Select(i=> string.Join(", ", _indexColumnFormatter.WriteToString(i))));
             writer.Write(" )");
             _onConflictClauseFormatter.Write(value.ConflictClause, writer);
         }

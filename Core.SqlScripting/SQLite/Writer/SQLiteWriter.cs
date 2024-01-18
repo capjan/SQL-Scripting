@@ -29,6 +29,7 @@ using ISqlStatement = Core.SqlScripting.Common.Syntax.ISqlStatement;
 
 namespace Core.SqlScripting.SQLite.Writer
 {
+    // ReSharper disable once InconsistentNaming
     public class SQLiteWriter: ISqlWriter
     {
         private readonly StatementTerminatorFormatter   _statementTerminatorFormatter;
@@ -47,7 +48,7 @@ namespace Core.SqlScripting.SQLite.Writer
         private readonly DropColumnStatementFormatter   _dropColumnStatementFormatter;
 
 
-        public SQLiteWriter(SqlWriterSettings settings = default)
+        public SQLiteWriter(SqlWriterSettings? settings = default)
         {
             settings = settings ?? new SqlWriterSettings
             {

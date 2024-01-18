@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Core.Text.Formatter;
 
 namespace Core.SqlScripting.Common.Writer.Common
 {

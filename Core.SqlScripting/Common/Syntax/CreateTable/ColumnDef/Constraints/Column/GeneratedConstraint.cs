@@ -7,7 +7,7 @@ namespace Core.SqlScripting.Common.Syntax.CreateTable.ColumnDef.Constraints.Colu
     /// </summary>
     public class GeneratedConstraint : AbstractSqlColumnConstraint
     {
-        public string              Expression   { get; set; }
+        public string?              Expression   { get; set; }
         public GeneratedColumnType BehaviorType { get; set; }
     }
 

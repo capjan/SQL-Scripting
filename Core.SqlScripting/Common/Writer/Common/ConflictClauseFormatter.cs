@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
+using Core.SqlScripting.Common;
 using Core.SqlScripting.Common.Syntax;
-using Core.SqlScripting.SQLite.Syntax.Enums;
-using Core.Text.Formatter;
 
 namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable
 {

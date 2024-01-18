@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.SqlScripting.Common.Syntax.CreateTable;
-using Core.Text.Formatter;
+﻿using Core.SqlScripting.Common.Syntax.CreateTable;
 
 namespace Core.SqlScripting.Common.Writer.Common
 {

@@ -3,7 +3,6 @@ using System.Globalization;
 using System.IO;
 using Core.SqlScripting.Common.Syntax.Insert;
 using Core.SqlScripting.Common.Writer.Common;
-using Core.Text.Formatter;
 
 namespace Core.SqlScripting.Common.Writer.Insert
 {

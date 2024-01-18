@@ -14,7 +14,7 @@ namespace Core.SqlScripting.Common.Syntax
             Entity = entity;
         }
 
-        public DeleteStatement(string entityName)
+        public DeleteStatement(string? entityName)
         {
             Entity = new EntityObject(entityName);
         }

@@ -12,10 +12,7 @@ namespace Core.SqlScripting.Extensions
 
         public static ColumnDefinition AddColumn(this CreateTableStatement createTableStatement,  string columnName, IColumnType type)
         {
-            var newColumn =  new ColumnDefinition()
-            {
-                Name = columnName, Type = type
-            };
+            var newColumn =  new ColumnDefinition(columnName, type);
             createTableStatement.Columns.Add(newColumn);
             return newColumn;
         }

@@ -1,4 +1,4 @@
-﻿using Core.Extensions.TextRelated;
+﻿using Core.SqlScripting.Common;
 using Core.SqlScripting.Common.Syntax.AlterTable;
 using Core.SqlScripting.Common.Syntax.CreateTable;
 using Core.SqlScripting.Common.Syntax.CreateTable.ColumnDef;
@@ -52,12 +52,9 @@ namespace Test.Core.SqlScripting.SQLite.SQLite
             };
 
             var statement = new AddColumnStatement(
-                new EntityObject("MyTableName"), 
-                new ColumnDefinition {
-                    Name = "Count",
-                    Type = new SqlIntegerType()
-
-                });
+                new EntityObject("MyTableName"),
+                new ColumnDefinition("Count", new SqlIntegerType())
+                );
             var writer    = new SQLiteWriter(settings);
             var actual    = writer.WriteToString(statement);
             

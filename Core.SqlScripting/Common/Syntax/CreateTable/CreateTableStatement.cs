@@ -14,7 +14,7 @@ namespace Core.SqlScripting.Common.Syntax.CreateTable
         public IList<ColumnDefinition> Columns          { get; } = new List<ColumnDefinition>();
         public IList<TableConstraint>  TableConstraints { get; } = new List<TableConstraint>();
 
-        public CreateTableStatement(string tableName)
+        public CreateTableStatement(string? tableName)
         {
             Entity = new EntityObject(tableName);
         }

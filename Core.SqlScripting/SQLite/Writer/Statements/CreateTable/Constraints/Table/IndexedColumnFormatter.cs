@@ -1,8 +1,8 @@
 ﻿using System.IO;
+using Core.SqlScripting.Common;
 using Core.SqlScripting.Common.Syntax.CreateTable.TableConstraints;
 using Core.SqlScripting.Common.Writer.Identifier;
 using Core.SqlScripting.SQLite.Syntax.Enums;
-using Core.Text.Formatter;
 
 namespace Core.SqlScripting.SQLite.Writer.Statements.CreateTable.Constraints.Table
 {

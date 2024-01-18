@@ -1,4 +1,4 @@
-﻿using Core.Extensions.TextRelated;
+﻿using Core.SqlScripting.Common;
 using Core.SqlScripting.Common.Syntax;
 using Core.SqlScripting.Common.Writer;
 using Core.SqlScripting.SQLite.Writer;

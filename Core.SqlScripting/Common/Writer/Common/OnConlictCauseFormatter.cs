@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using Core.SqlScripting.Common.Syntax;
 using Core.SqlScripting.SQLite.Writer.Statements.CreateTable;
-using Core.Text.Formatter;
 
 namespace Core.SqlScripting.Common.Writer.Common
 {

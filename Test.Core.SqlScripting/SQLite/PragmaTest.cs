@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.Extensions.TextRelated;
-using Core.SqlScripting.Common.Syntax;
+﻿using Core.SqlScripting.Common;
 using Core.SqlScripting.Common.Syntax.Entity;
 using Core.SqlScripting.Common.Writer;
 using Core.SqlScripting.SQLite.Syntax.Statements;
@@ -23,11 +19,7 @@ namespace Test.Core.SqlScripting.SQLite.SQLite
 
             var writer = new SQLiteWriter(settings);
 
-            var pragma = new PragmaStatement
-            {
-                Entity = new EntityObject("auto_vacuum"), 
-                Value = new BooleanPragmaValue {Value = true}
-            };
+            var pragma = new PragmaStatement(new EntityObject("auto_vacuum"), new BooleanPragmaValue {Value = true});
 
             var sql = writer.WriteToString(pragma);
             Assert.Equal("PRAGMA \"auto_vacuum\" = 1;", sql);

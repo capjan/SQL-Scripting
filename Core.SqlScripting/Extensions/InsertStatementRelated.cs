@@ -10,16 +10,16 @@ namespace Core.SqlScripting.Extensions
 {
     public static class InsertStatementRelated
     {
-        public static ColumnAssignment<T> AddColumn<T>(this InsertStatement statement, string columnName, T value = default)
+        public static ColumnAssignment<T?> AddColumn<T>(this InsertStatement statement, string columnName, T? value = default)
         {
-            var result = new ColumnAssignment<T>(columnName, value);
+            var result = new ColumnAssignment<T?>(columnName, value);
             statement.Assignments.Add(result);
             return result;
         }
 
-        public static UpdateAssignment<T> SetColumn<T>(this UpdateStatement statement, string columnName, T value = default)
+        public static UpdateAssignment<T?> SetColumn<T>(this UpdateStatement statement, string columnName, T? value = default)
         {
-            var result = new UpdateAssignment<T>
+            var result = new UpdateAssignment<T?>
             {
                 ColumnOrColumnNameList = new ColumnName(columnName),
                 Value                  = value

@@ -2,7 +2,6 @@
 using Core.SqlScripting.Common.Syntax.Entity;
 using Core.SqlScripting.Common.Writer.Identifier;
 using Core.SqlScripting.SqlServer.Writer;
-using Core.Text.Formatter;
 
 namespace Core.SqlScripting.Common.Writer.Common.Entity
 {

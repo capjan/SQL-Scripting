@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Core.Text.Formatter;
+using Core.SqlScripting.Common;
 
 namespace Core.SqlScripting.SqlServer.Writer.Helper
 {

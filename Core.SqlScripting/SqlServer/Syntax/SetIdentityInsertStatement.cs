@@ -6,9 +6,9 @@ using Core.SqlScripting.Common.Syntax.Entity;
 
 namespace Core.SqlScripting.SqlServer.Syntax
 {
-    public class SetIdentityInsertStatement: ISqlStatement
+    public class SetIdentityInsertStatement(EntityObject entity) : ISqlStatement
     {
-        public EntityObject Entity { get; set; }
+        public EntityObject Entity { get; set; } = entity;
         public bool         Value  { get; set; }
     }
 }

@@ -8,9 +8,14 @@ namespace Core.SqlScripting.Common.Syntax.Update
     /// </summary>
     public class UpdateStatement: ISqlStatement
     {
-        public QualifiedEntityObject   QualifiedEntity { get; set; }
+        public UpdateStatement(QualifiedEntityObject qualifiedEntity)
+        {
+            QualifiedEntity = qualifiedEntity;
+        }
+
+        public QualifiedEntityObject QualifiedEntity { get; set; }
         public SqlConflictClause          OnConflictRule  { get; set; } = SqlConflictClause.Default;
         public IList<IUpdateAssignment> Assignments     { get; set; } = new List<IUpdateAssignment>();
-        public IExpression             WhereExpression { get; set; }
+        public IExpression? WhereExpression { get; set; }
     }
 }

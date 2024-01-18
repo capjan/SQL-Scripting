@@ -1,6 +1,5 @@
-﻿using Core.Extensions.TextRelated;
+﻿using Core.SqlScripting.Common;
 using Core.SqlScripting.Common.Syntax;
-using Core.SqlScripting.Common.Syntax.Column;
 using Core.SqlScripting.Common.Syntax.Entity;
 using Core.SqlScripting.Common.Syntax.Update;
 using Core.SqlScripting.Common.Writer;
@@ -21,19 +20,11 @@ namespace Test.Core.SqlScripting.SQLite.SQLite
             };
             var writer = new SQLiteWriter(settings);
             var entity = new EntityObject("User");
-            var qualifiedEntityObject = new QualifiedEntityObject
-            {
-                Entity = entity
-            };
+            var qualifiedEntityObject = new QualifiedEntityObject(entity);
 
-            var update = new UpdateStatement
+            var update = new UpdateStatement(qualifiedEntityObject)
             {
-                QualifiedEntity = qualifiedEntityObject,
-                WhereExpression = new RawExpression
-                {
-                    Content = "\"Name\" LIKE '%Th'"
-                }
-
+                WhereExpression = new RawExpression("\"Name\" LIKE '%Th'")
             };
             update.SetColumn("Name", "Jan");
 
@@ -48,8 +39,8 @@ namespace Test.Core.SqlScripting.SQLite.SQLite
             var settings              = new SqlWriterSettings {WriteNewLineAfterStatementTerminator = false};
             var writer                = new SQLiteWriter(settings);
             var entity                = new EntityObject("User");
-            var qualifiedEntityObject = new QualifiedEntityObject { Entity    = entity };
-            var update                = new UpdateStatement {QualifiedEntity = qualifiedEntityObject};
+            var qualifiedEntityObject = new QualifiedEntityObject(entity);
+            var update                = new UpdateStatement(qualifiedEntityObject);
             update.SetColumn("Name", "Jan");
 
             var sql = writer.WriteToString(update);
@@ -64,11 +55,10 @@ namespace Test.Core.SqlScripting.SQLite.SQLite
             var settings              = new SqlWriterSettings {WriteNewLineAfterStatementTerminator = false};
             var writer                = new SQLiteWriter(settings);
             var entity                = new EntityObject("User");
-            var qualifiedEntityObject = new QualifiedEntityObject { Entity    = entity, Alias = "u"};
+            var qualifiedEntityObject = new QualifiedEntityObject(entity) { Alias = "u"};
 
-            var update = new UpdateStatement
+            var update = new UpdateStatement(qualifiedEntityObject)
             {
-                QualifiedEntity = qualifiedEntityObject, 
                 OnConflictRule = SqlConflictClause.Rollback
             };
             update.SetColumn("Name", "Jan");

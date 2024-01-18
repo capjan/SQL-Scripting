@@ -1,8 +1,6 @@
 ﻿using System;
-using Core.SqlScripting.Common.Syntax.Entity;
 using Core.SqlScripting.Common.Syntax.Insert;
 using Core.SqlScripting.Extensions;
-using Core.SqlScripting.SqlServer.Syntax;
 using Xunit;
 
 namespace Test.Core.SqlScripting.SQLite.SqlServer

@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using Core.SqlScripting.Common;
+using Core.SqlScripting.Common.Writer.Common.Entity;
 using Core.SqlScripting.SQLite.Syntax.Statements;
 using Core.SqlScripting.SqlServer.Writer;
-using Core.Text.Formatter;
 
 namespace Core.SqlScripting.SQLite.Writer.Statements
 {

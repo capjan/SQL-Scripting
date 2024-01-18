@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Text;
-using Core.SqlScripting.Common.Syntax.Insert;
 using Core.SqlScripting.Common.Syntax.Update;
 using Core.SqlScripting.Common.Writer.Common;
 using Core.SqlScripting.Common.Writer.Common.Column;
 using Core.SqlScripting.Common.Writer.Common.Expression;
-using Core.Text.Formatter;
 
 namespace Core.SqlScripting.Common.Writer.Update
 {
@@ -31,8 +27,8 @@ namespace Core.SqlScripting.Common.Writer.Update
             writer.Write(" = ");
             if (value is UpdateAssignment<IExpression> expressionAssignment)
                 _expressionFormatter.Write(expressionAssignment.Value, writer);
-            else if (value is UpdateAssignment<string> stringAssignment)
-                _sqlStringFormatter.Write(stringAssignment.Value, writer);
+            else if (value is UpdateAssignment<string> { Value: {} stringValue })
+                _sqlStringFormatter.Write(stringValue, writer);
             else if (value is UpdateAssignment<int> intAssignment)
                 writer.Write(string.Format(CultureInfo.InvariantCulture, "{0:D}", intAssignment.Value));
             else if (value is UpdateAssignment<long> longAssignment)

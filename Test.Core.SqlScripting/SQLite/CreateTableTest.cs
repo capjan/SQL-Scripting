@@ -1,12 +1,9 @@
-using Core.Extensions.TextRelated;
+using Core.SqlScripting.Common;
 using Core.SqlScripting.Common.Syntax.CreateTable;
 using Core.SqlScripting.Common.Syntax.CreateTable.ColumnDef;
 using Core.SqlScripting.Common.Syntax.CreateTable.TableConstraints;
 using Core.SqlScripting.Common.Syntax.Datatypes;
-using Core.SqlScripting.Common.Syntax.Entity;
-using Core.SqlScripting.SQLite.Syntax;
 using Core.SqlScripting.SQLite.Syntax.Enums;
-using Core.SqlScripting.SQLite.Syntax.Statements;
 using Core.SqlScripting.SQLite.Writer;
 using Xunit;
 
@@ -21,16 +18,8 @@ namespace Test.Core.SqlScripting.SQLite.SQLite
             var table = new CreateTableStatement("User")
             {
                 Columns = {
-                    new ColumnDefinition
-                    {
-                        Name = "Id",
-                        Type = new SqlIntegerType()
-                    },
-                    new ColumnDefinition
-                    {
-                        Name = "FirstName",
-                        Type = new SqlStringType(SqlStringLengthBehavior.Varying, 50)
-                    }
+                    new ColumnDefinition("Id", new SqlIntegerType()),
+                    new ColumnDefinition("FirstName", new SqlStringType(SqlStringLengthBehavior.Varying, 50))
                 },
                 TableConstraints = { 
                     new TablePrimaryOrUniqueKeyConstraint {

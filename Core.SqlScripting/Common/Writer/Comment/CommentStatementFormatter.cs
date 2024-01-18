@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using Core.SqlScripting.Common.Syntax.Comment;
-using Core.Text.Formatter;
 
 namespace Core.SqlScripting.Common.Writer.Comment
 {

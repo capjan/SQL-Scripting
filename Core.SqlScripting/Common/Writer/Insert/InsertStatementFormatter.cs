@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
-using Core.Extensions.TextRelated;
 using Core.SqlScripting.Common.Syntax.Insert;
+using Core.SqlScripting.Common.Writer.Common.Entity;
 using Core.SqlScripting.Common.Writer.Identifier;
 using Core.SqlScripting.SqlServer.Writer;
 using Core.Text.Formatter;

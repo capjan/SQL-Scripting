@@ -1,8 +1,7 @@
 ﻿using System.IO;
 using Core.SqlScripting.Common.Syntax.Column;
-using Core.SqlScripting.Common.Syntax.Update;
 using Core.SqlScripting.Common.Writer.Identifier;
-using Core.Text.Formatter;
+
 
 namespace Core.SqlScripting.Common.Writer.Common.Column
 {

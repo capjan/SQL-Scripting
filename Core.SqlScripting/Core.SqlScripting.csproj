@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Cap.SqlScripting</PackageId>
     <Version>0.4.0-alpha</Version>
@@ -13,9 +13,12 @@
     <Copyright>2020 Jan Ruhländer</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<IncludeSymbols>true</IncludeSymbols>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <RepositoryUrl>https://github.com/capjan/SQL-Scripting</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,11 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cap.Core" Version="4.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Common\Syntax\CreateTable\ColumnDef\Constraints\Table\" />
+    <None Include="Doc\README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>

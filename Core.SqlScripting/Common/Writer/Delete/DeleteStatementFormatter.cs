@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Core.SqlScripting.Common.Syntax;
+using Core.SqlScripting.Common.Writer.Common.Entity;
 using Core.SqlScripting.SqlServer.Writer;
-using Core.Text.Formatter;
 
 namespace Core.SqlScripting.Common.Writer.Delete
 {

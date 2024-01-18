@@ -11,12 +11,12 @@ namespace Core.SqlScripting.SQLite.Syntax.Statements
         /// <summary>
         /// Optional: By default, VACUUM only works only on the main database. Use the Schema name to apply the vacuum onto an attached database.
         /// </summary>
-        public string SchemaName { get; set; }
+        public string? SchemaName { get; set; }
 
         /// <summary>
         /// INTO filename clause. By default Vacuum is applied to the Database itself. If you set a OutputPath the result is written to the given file and the main database remains untouched.
         /// </summary>
-        public string OutputPath { get; set; }
+        public string? OutputPath { get; set; }
 
     }
 }

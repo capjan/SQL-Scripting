@@ -1,5 +1,4 @@
-﻿using Core.SqlScripting.Common.Syntax;
-using Core.SqlScripting.Common.Syntax.Entity;
+﻿using Core.SqlScripting.Common.Syntax.Entity;
 using Core.SqlScripting.SqlServer.Syntax;
 using Xunit;
 
@@ -11,9 +10,8 @@ namespace Test.Core.SqlScripting.SQLite.SqlServer
         public void BasicTest()
         {
             var entity = new EntityObject("User");
-            var setIdentityInsert = new SetIdentityInsertStatement
-            {
-                Entity = entity,
+            var setIdentityInsert = new SetIdentityInsertStatement(
+            entity) {
                 Value  = false
             };
             var sql1 = Context.SingleStatementWriteTest(setIdentityInsert);

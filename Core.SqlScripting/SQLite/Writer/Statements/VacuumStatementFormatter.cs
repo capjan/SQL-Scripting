@@ -1,8 +1,8 @@
 ﻿using System.IO;
+using Core.SqlScripting.Common;
 using Core.SqlScripting.Common.Writer.Common;
 using Core.SqlScripting.Common.Writer.Identifier;
 using Core.SqlScripting.SQLite.Syntax.Statements;
-using Core.Text.Formatter;
 
 namespace Core.SqlScripting.SQLite.Writer.Statements
 {
@@ -26,10 +26,10 @@ namespace Core.SqlScripting.SQLite.Writer.Statements
                 _identifierFormatter.Write(value.SchemaName, writer);
             }
 
-            if (!string.IsNullOrWhiteSpace(value.OutputPath))
+            if (value.OutputPath is { } valueOutputPath)
             {
                 writer.Write(" INTO ");
-                _sqlStringFormatter.Write(value.OutputPath, writer);
+                _sqlStringFormatter.Write(valueOutputPath, writer);
             }
         }
     }

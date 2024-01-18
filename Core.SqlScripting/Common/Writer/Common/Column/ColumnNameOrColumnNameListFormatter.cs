@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Core.SqlScripting.Common.Syntax.Column;
-using Core.Text.Formatter;
 
 namespace Core.SqlScripting.Common.Writer.Common.Column
 {
@@ -17,7 +14,7 @@ namespace Core.SqlScripting.Common.Writer.Common.Column
             _columnNameListFormatter = columnNameListFormatter;
         }
 
-        public void Write(IColumnNameOrColumnNameList value, TextWriter writer)
+        public void Write(IColumnNameOrColumnNameList? value, TextWriter writer)
         {
             if (value is ColumnName columnName)
                 _columnNameFormatter.Write(columnName, writer);

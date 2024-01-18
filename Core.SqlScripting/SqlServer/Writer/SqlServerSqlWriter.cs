@@ -8,6 +8,7 @@ using Core.SqlScripting.Common.Syntax.Insert;
 using Core.SqlScripting.Common.Writer;
 using Core.SqlScripting.Common.Writer.Comment;
 using Core.SqlScripting.Common.Writer.Common;
+using Core.SqlScripting.Common.Writer.Common.Entity;
 using Core.SqlScripting.Common.Writer.Delete;
 using Core.SqlScripting.Common.Writer.Identifier;
 using Core.SqlScripting.Common.Writer.Insert;
@@ -31,7 +32,7 @@ namespace Core.SqlScripting.SqlServer.Writer
         private readonly DeleteStatementFormatter         _deleteStatementFormatter;
         private readonly CreateTableStatementFormatter    _createTableFormatter;
 
-        public SqlServerSqlWriter(SqlWriterSettings settings = default)
+        public SqlServerSqlWriter(SqlWriterSettings? settings = default)
         {
             settings = settings ?? new SqlWriterSettings
             {

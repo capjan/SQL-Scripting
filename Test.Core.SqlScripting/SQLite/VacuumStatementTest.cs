@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.Extensions.TextRelated;
+﻿using Core.SqlScripting.Common;
 using Core.SqlScripting.Common.Writer;
 using Core.SqlScripting.SQLite.Syntax.Statements;
 using Core.SqlScripting.SQLite.Writer;

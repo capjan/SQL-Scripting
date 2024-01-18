@@ -7,12 +7,12 @@ namespace Core.SqlScripting.Common.Syntax.Update
     /// </summary>
     public class UpdateAssignment<T> : IUpdateAssignment
     {
-        public IColumnNameOrColumnNameList ColumnOrColumnNameList { get; set; }
-        public T                           Value                  { get; set; }
+        public IColumnNameOrColumnNameList? ColumnOrColumnNameList { get; set; }
+        public T?                           Value                  { get; set; }
     }
 
     public interface IUpdateAssignment
     {
-        IColumnNameOrColumnNameList ColumnOrColumnNameList { get; set; }
+        IColumnNameOrColumnNameList? ColumnOrColumnNameList { get; set; }
     }
 }

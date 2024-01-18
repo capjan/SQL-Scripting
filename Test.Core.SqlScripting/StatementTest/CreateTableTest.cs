@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.Extensions.TextRelated;
+﻿using Core.SqlScripting.Common;
 using Core.SqlScripting.Common.Syntax.CreateTable;
-using Core.SqlScripting.Common.Syntax.CreateTable.ColumnDef;
 using Core.SqlScripting.Common.Syntax.Datatypes;
 using Core.SqlScripting.Common.Writer;
 using Core.SqlScripting.Extensions;
-using Core.SqlScripting.SQLite.Syntax.Statements;
 using Core.SqlScripting.SQLite.Writer;
 using Core.SqlScripting.SqlServer.Writer;
 using Xunit;
